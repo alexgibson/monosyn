@@ -1,0 +1,94 @@
+doctype html
+html
+    head
+        title= title
+        link(rel='stylesheet', href='/stylesheets/synth.css')
+        script(src='/javascripts/socket.io.min.js')
+        script(src='/javascripts/ui.js')
+        script(src='/javascripts/synth.js')
+        script(src='/javascripts/main.js')
+    body.
+        <div id="synth">
+            <div id="oscillator" class="component">
+                <h2>Oscillator</h2>
+                <select id="osc-1" autocomplete="off">
+                    <option value="sine">Sine</option>
+                    <option value="square" selected>Square</option>
+                    <option value="sawtooth">Sawtooth</option>
+                    <option value="triangle">Triangle</option>
+                </select>
+            </div>
+
+            <div id="filter" class="component">
+                <h2>Filter</h2>
+                <select id="filter-type" autocomplete="off">
+                    <option value="lowpass" selected>Lowpass</option>
+                    <option value="highpass">Highpass</option>
+                    <option value="bandpass">Bandpass</option>
+                    <option value="lowshelf">Lowshelf</option>
+                    <option value="highshelf">Highshelf</option>
+                    <option value="peaking">Peaking</option>
+                    <option value="notch">Notch</option>
+                    <option value="allpass">All Pass</option>
+                </select>
+                <p>
+                    <input id="filter-freq" type="range" min="40" max="12000" step="1" value="12000" autocomplete="off" />
+                    Freq: <output id="filter-freq-output" for="filter-freq"></output>
+                </p>
+                <p>
+                    <input id="filter-q" type="range" min="1" max="10" step="0.001" value="1" autocomplete="off" />
+                    Q: <output id="filter-q-output" for="filter-q"></output>
+                </p>
+            </div>
+
+            <div id="keyboard">
+                <div class="key" data-id="32.7032">C1</div>
+                <div class="key black" data-id="34.6478">C#1</div>
+                <div class="key" data-id="36.7081">D1</div>
+                <div class="key black" data-id="38.8909">D#1</div>
+                <div class="key" data-id="41.2034">E1</div>
+                <div class="key" data-id="43.6535">F1</div>
+                <div class="key black" data-id="46.2493">F#1</div>
+                <div class="key" data-id="48.9994">G1</div>
+                <div class="key black" data-id="51.9131">G#1</div>
+                <div class="key" data-id="55.0000">A1</div>
+                <div class="key black" data-id="58.2705">A#1</div>
+                <div class="key" data-id="61.7354">B1</div>
+                <div class="key" data-id="65.4064">C2</div>
+                <div class="key black" data-id="69.2957">C#2</div>
+                <div class="key" data-id="73.4162">D2</div>
+                <div class="key black" data-id="77.7817">D#2</div>
+                <div class="key" data-id="82.4069">E2</div>
+                <div class="key" data-id="87.3071">F2</div>
+                <div class="key black" data-id="92.4986">F#2</div>
+                <div class="key" data-id="97.9989">G2</div>
+                <div class="key black" data-id="103.826">G#2</div>
+                <div class="key" data-id="110.000">A2</div>
+                <div class="key black" data-id="116.541">A#2</div>
+                <div class="key" data-id="123.471">B2</div>
+                <div class="key" data-id="130.813">C3</div>
+                <div class="key black" data-id="138.591">C#3</div>
+                <div class="key" data-id="146.832">D3</div>
+                <div class="key black" data-id="155.563">D#3</div>
+                <div class="key" data-id="164.814">E3</div>
+                <div class="key" data-id="174.614">F3</div>
+                <div class="key black" data-id="184.997">F#3</div>
+                <div class="key" data-id="195.998">G3</div>
+                <div class="key black" data-id="207.652">G#3</div>
+                <div class="key" data-id="220.000">A3</div>
+                <div class="key black" data-id="233.082">A#3</div>
+                <div class="key" data-id="246.942">B3</div>
+                <div class="key" data-id="261.626">C4</div>
+                <div class="key black" data-id="277.183">C#4</div>
+                <div class="key" data-id="293.665">D4</div>
+                <div class="key black" data-id="311.127">D#4</div>
+                <div class="key" data-id="329.628">E4</div>
+                <div class="key" data-id="349.228">F4</div>
+                <div class="key black" data-id="369.994">F#4</div>
+                <div class="key" data-id="391.995">G4</div>
+                <div class="key black" data-id="415.305">G#4</div>
+                <div class="key" data-id="440.000">A4</div>
+                <div class="key black" data-id="466.164">A4</div>
+                <div class="key" data-id="493.883">B4</div>
+            </div>
+        </div>

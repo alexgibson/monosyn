@@ -1,0 +1,23 @@
+{
+  "name": "monosyn",
+  "version": "0.0.1",
+  "description": "Web Audio synth with a Node powered touch controller.",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "3.4.7",
+    "jade": "*",
+    "socket.io": "~0.9.16"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alexgibson/monosyn.git"
+  },
+  "author": "Alex Gibson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alexgibson/monosyn/issues"
+  }
+}

@@ -1,0 +1,38 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#synth {
+    width: 1152px;
+    margin: 0 auto;
+    background: rgba(0,0,0,0.1);
+    border: 1px solid black;
+}
+
+.component {
+    float: left;
+    padding: 10px;
+}
+
+#keyboard {
+    overflow: hidden;
+    width: 100%;
+}
+
+.key {
+    float: left;
+    width: 22px;
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+    font-size: 13px;
+    border: 1px solid black;
+    background: #fff;
+}
+
+.black {
+    background: black;
+    color: white;
+}
