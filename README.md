@@ -11,7 +11,7 @@ TODO
 ----
 
 * Add second oscillator with detune controls
-* Add envolope control section
+* Add envelope control section
 * Add Keyboard support
 * Web Midi support (polyfill?)
 * Synth needs a decent UI!
