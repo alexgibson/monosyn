@@ -14,7 +14,7 @@ function createRoomId() {
  */
 function init () {
     'use strict';
-    var socket = io.connect(window.location.protocol + window.location.hostname + ':8008');
+    var socket = io.connect(window.location.protocol + window.location.hostname);
     var synth = new AudioInterface();
     var ui = new UI(synth);
     var roomId = createRoomId();

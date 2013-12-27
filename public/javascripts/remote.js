@@ -7,7 +7,7 @@ function getUrlVars() {
 }
 
 function init () {
-    var socket = io.connect(window.location.protocol + window.location.hostname + ":8008");
+    var socket = io.connect(window.location.protocol + window.location.hostname);
 
     var filterPad = document.getElementById('filter');
     var urlVars = getUrlVars();
