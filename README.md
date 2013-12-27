@@ -1,7 +1,7 @@
 monosyn
 =======
 
-Node.js powered audio synthesiser built using the Web Audio API.
+A Web Audio synthesiser with Node.js powered modulation.
 
 Features a dual oscillator subtractive synth on desktop browsers. Connect your mobile browser to act as a real-time filter modulation controller.
 
