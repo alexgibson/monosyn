@@ -3,7 +3,7 @@ monosyn
 
 Web Audio synthesiser with a Node powered modulation controller.
 
-Features a dual oscillator subtractive synth on desktop browsers. Connect your mobile browser to act as a real-time filter modulation controller.
+Features a dual oscillator subtractive synth on desktop browsers. Connect your mobile browser to act as a real-time filter control.
 
 Built using Web Audio API, Node.js, Express & Socket.io.
 
