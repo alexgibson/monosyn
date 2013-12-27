@@ -10,6 +10,11 @@ var path = require('path');
 
 var app = express();
 
+var server = require('http').createServer(app);
+var io = require('socket.io').listen(server);
+
+server.listen(8008);
+
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
@@ -33,19 +38,21 @@ http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
 
-var io = require('socket.io').listen(8008);
-
 io.sockets.on('connection', function (socket) {
-    socket.on('remoteClientSize', function (msg) {
-        io.sockets.emit('clientSize', msg);
+    socket.on('room', function(room) {
+        socket.join(room);
+        console.log('joined room: ' + room);
     });
-    socket.on('remoteFilterStart', function (msg) {
-        io.sockets.emit('filterStart', msg);
+    socket.on('remoteClientSize', function (msg, room) {
+        socket.broadcast.to(msg.room).emit('clientSize', msg);
     });
-    socket.on('remoteFilterMove', function (msg) {
-        io.sockets.emit('filterMove', msg);
+    socket.on('remoteFilterStart', function (msg, room) {
+        socket.broadcast.to(msg.room).emit('filterStart', msg);
     });
-    socket.on('remoteFilterEnd', function (msg) {
-        io.sockets.emit('filterEnd', msg);
+    socket.on('remoteFilterMove', function (msg, room) {
+        socket.broadcast.to(msg.room).emit('filterMove', msg);
+    });
+    socket.on('remoteFilterEnd', function (msg, room) {
+        socket.broadcast.to(msg.room).emit('filterEnd', msg);
     });
 });

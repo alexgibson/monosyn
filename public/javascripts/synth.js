@@ -59,8 +59,8 @@ AudioInterface.prototype.setOscWave = function (wave) {
 AudioInterface.prototype.initBiquadFilter = function (type) {
     this.nodes.filter = this.ctx.createBiquadFilter();
     this.setFilterType(type);
-    this.setFilterFreq();
-    this.setFilterQuality();
+    this.setFilterFreq(12000);
+    this.setFilterQuality(1);
 };
 
 /*
@@ -74,7 +74,7 @@ AudioInterface.prototype.setOscFreq = function (freq) {
  * Set the source oscillator frequency value
  */
 
-AudioInterface.prototype.getTouchFreq = function (x=0, y=0) {
+AudioInterface.prototype.getTouchFreq = function (x, y) {
     var freq = 12000 - (parseInt(y, 10) * (12000 / this.remoteHeight));
     var q = 10 - (this.remoteWidth - parseInt(x, 10)) / this.remoteWidth * 10;
     freq = Math.min(freq, 12000);
@@ -93,7 +93,7 @@ AudioInterface.prototype.setFilterType = function (type) {
     this.nodes.filter.type = type;
 };
 
-AudioInterface.prototype.setFilterFreq = function (freq=12000) {
+AudioInterface.prototype.setFilterFreq = function (freq) {
     this.nodes.filter.frequency.value = freq;
 };
 
@@ -105,7 +105,7 @@ AudioInterface.prototype.getFilterQuality = function () {
     return this.nodes.filter.Q.value;
 };
 
-AudioInterface.prototype.setFilterQuality = function (q=1) {
+AudioInterface.prototype.setFilterQuality = function (q) {
     this.nodes.filter.Q.value = q;
 };
 

@@ -11,8 +11,8 @@ function UI (synth) {
     this.synth.initOscillator(this.osc1.options[this.osc1.selectedIndex].value);
     this.synth.initBiquadFilter(this.filterType.options[this.filterType.selectedIndex].value);
 
-    this.updateFilterFreqOutput();
-    this.updateFilterQualityOutput();
+    this.updateFilterFreqOutput(12000);
+    this.updateFilterQualityOutput(1);
 
     this.bindEvents();
     this.synth.routeComponents();
@@ -52,11 +52,11 @@ UI.prototype.setFilterQuality = function (q) {
     this.filterQuality.value = q;
 };
 
-UI.prototype.updateFilterFreqOutput = function (freq=12000) {
+UI.prototype.updateFilterFreqOutput = function (freq) {
     this.filterFreqOutput.innerHTML = freq;
 };
 
-UI.prototype.updateFilterQualityOutput = function (q=1) {
+UI.prototype.updateFilterQualityOutput = function (q) {
     this.filterQualityOutput.innerHTML = q;
 };
 
