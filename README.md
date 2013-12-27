@@ -15,3 +15,18 @@ TODO
 * Synth needs a decent UI!
 * Remote filter control also needs a UI
 * Support mobile device orientation change
+* Installation and setup instructions
+
+Installation
+------------
+
+`npm install`
+
+Then run the server
+
+`node app`
+
+Browser support
+---------------
+
+Monosyn uses unprefixed Web Audio API syntax, so currently works best in Firefox.
