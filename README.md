@@ -1,7 +1,7 @@
 monosyn
 =======
 
-A Web Audio synthesiser with Node.js powered modulation.
+Web Audio synthesiser with a Node powered modulation controller.
 
 Features a dual oscillator subtractive synth on desktop browsers. Connect your mobile browser to act as a real-time filter modulation controller.
 
@@ -12,6 +12,8 @@ TODO
 
 * Add second oscillator with detune controls
 * Add envolope control section
+* Add Keyboard support
+* Web Midi support (polyfill?)
 * Synth needs a decent UI!
 * Remote filter control also needs a UI
 * Support mobile device orientation change
