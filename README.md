@@ -29,4 +29,4 @@ Then run the server
 Browser support
 ---------------
 
-Monosyn uses unprefixed Web Audio API syntax, so currently works best in Firefox.
+Monosyn uses unprefixed Web Audio API syntax, so currently works best in Firefox. The mobile controller should work on any device that supports touch events.
