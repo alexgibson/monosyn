@@ -1,7 +1,7 @@
 {
   "name": "monosyn",
   "version": "0.0.1",
-  "description": "Web Audio synth with a Node powered touch controller.",
+  "description": "A Node.js powered Web Audio synthesiser.",
   "private": true,
   "scripts": {
     "start": "node app.js"
