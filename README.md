@@ -22,7 +22,7 @@ TODO
 Future
 ------
 
-* [Web Midi API](http://www.w3.org/TR/webmidi/) support (Polyfill?)
+* [Web MIDI API](http://www.w3.org/TR/webmidi/) support (Polyfill?)
 
 Installation
 ------------
