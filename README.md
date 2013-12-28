@@ -14,11 +14,15 @@ TODO
 * Add envelope control section
 * Add note hold setting
 * Add Keyboard support
-* Web Midi support (polyfill?)
 * Synth needs a decent UI!
 * Remote filter control also needs a UI
 * Support mobile device orientation change
 * Installation and setup instructions
+
+Future
+------
+
+* Web Midi support (Polyfill?)
 
 Installation
 ------------
