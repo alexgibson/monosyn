@@ -20,7 +20,6 @@ TODO
 * Remote filter control also needs a UI
 * Support mobile device orientation change
 * Installation and setup instructions
-* Config Grunt
 
 Installation
 ------------
@@ -30,6 +29,10 @@ Installation
 Then run the server
 
 `node app`
+
+For development, you can just run Grunt. This run the server and watch for changes.
+
+`grunt`
 
 Browser support
 ---------------
