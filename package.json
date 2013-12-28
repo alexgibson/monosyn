@@ -19,5 +19,14 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/alexgibson/monosyn/issues"
+  },
+  "devDependencies": {
+    "nodemon": "~0.7.10",
+    "grunt": "~0.4.2",
+    "grunt-cli": "~0.1.11",
+    "grunt-contrib-uglify": "~0.2.7",
+    "grunt-nodemon": "~0.1.2",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-concurrent": "~0.4.2"
   }
 }

@@ -2,11 +2,8 @@ doctype html
 html
     head
         title= title
-        link(rel='stylesheet', href='/stylesheets/synth.css')
-        script(src='/javascripts/socket.io.min.js')
-        script(src='/javascripts/ui.js')
-        script(src='/javascripts/synth.js')
-        script(src='/javascripts/main.js')
+        link(rel='stylesheet', href='/css/synth.css')
+        script(src='/js/dist/synth.min.js')
     body.
         <div id="synth">
             <div id="oscillator" class="component">
@@ -90,6 +87,8 @@ html
                 <div class="key" data-id="440.000">A4</div>
                 <div class="key black" data-id="466.164">A4</div>
                 <div class="key" data-id="493.883">B4</div>
+                <div class="key" data-id="523.251">C5</div>
+
             </div>
         </div>
 
