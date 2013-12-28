@@ -1,7 +1,7 @@
 monosyn
 =======
 
-A Web Audio synthesiser with Node powered modulation controller.
+A Web Audio synthesiser with Node-powered modulation controller.
 
 Monosyn is a 49 key, monophonic, subtractive synthesizer for desktop browsers. It features dual oscillators, biquad filter and envelope controls. Connect your mobile device to act as a touch-based real time filter modulation control.
 
@@ -18,6 +18,7 @@ TODO
 * Remote filter control also needs a UI
 * Support mobile device orientation change
 * Installation and setup instructions
+* Config Grunt
 
 Installation
 ------------
