@@ -1,7 +1,7 @@
 {
   "name": "monosyn",
   "version": "0.0.1",
-  "description": "A Node.js powered Web Audio synthesiser.",
+  "description": "A Web Audio synthesiser with a Node.js powered modulation controller.",
   "private": true,
   "scripts": {
     "start": "node app.js"
