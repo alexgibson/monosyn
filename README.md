@@ -12,6 +12,8 @@ TODO
 
 * Add second oscillator with detune controls
 * Add envelope control section
+* Add note hold mode
+* Add an Arpeggiator?
 * Add Keyboard support
 * Web Midi support (polyfill?)
 * Synth needs a decent UI!
