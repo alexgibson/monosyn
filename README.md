@@ -30,9 +30,7 @@ Then run the server
 
 `node app`
 
-For development, you can just run Grunt. This run the server and watch for changes.
-
-`grunt`
+For development, you can just run `grunt`. This will start the server and watch for changes.
 
 Browser support
 ---------------
