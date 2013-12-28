@@ -12,8 +12,7 @@ TODO
 
 * Add second oscillator with detune controls
 * Add envelope control section
-* Add note hold mode
-* Add an Arpeggiator?
+* Add note hold setting
 * Add Keyboard support
 * Web Midi support (polyfill?)
 * Synth needs a decent UI!
@@ -30,7 +29,7 @@ Then run the server
 
 `node app`
 
-For development, you can just run `grunt`. This will start the server and watch for changes.
+For development, you can just run `grunt` to start the server and watch for changes.
 
 Browser support
 ---------------
