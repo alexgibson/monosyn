@@ -8,7 +8,7 @@ html
         <div id="synth">
             <div id="oscillator" class="component">
                 <h2>Oscillator</h2>
-                <select id="osc-1" autocomplete="off">
+                <select id="osc-1">
                     <option value="sine">Sine</option>
                     <option value="square" selected>Square</option>
                     <option value="sawtooth">Sawtooth</option>
@@ -18,7 +18,7 @@ html
 
             <div id="filter" class="component">
                 <h2>Filter</h2>
-                <select id="filter-type" autocomplete="off">
+                <select id="filter-type">
                     <option value="lowpass" selected>Lowpass</option>
                     <option value="highpass">Highpass</option>
                     <option value="bandpass">Bandpass</option>
@@ -92,4 +92,4 @@ html
             </div>
         </div>
 
-        <p>Mobile URL: <a id="remote-url" href=""></a></p>
+        <p>Room name: <span id="room"></span></p>

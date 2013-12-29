@@ -1,7 +1,4 @@
-
-/**
- * Module dependencies.
- */
+'use strict';
 
 var express = require('express');
 var routes = require('./routes');
@@ -31,6 +28,10 @@ app.get('/', routes.index);
 
 io.sockets.on('connection', function (socket) {
     socket.on('room', function(room) {
+        if(socket.room) {
+            socket.leave(socket.room);
+        }
+        socket.room = room;
         socket.join(room);
     });
     socket.on('remoteClientSize', function (msg, room) {

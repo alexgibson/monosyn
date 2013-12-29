@@ -1,49 +1,49 @@
-/*
- * Creates a random room id
- */
-function createRoomId() {
-    var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
-    var string_length = 8;
-    var randomstring = '';
-    for (var i = 0; i < string_length; i++) {
-        var rnum = Math.floor(Math.random() * chars.length);
-        randomstring += chars.substring(rnum,rnum+1);
-    }
-    return randomstring;
-}
-
-/*
- * Get the party started
- */
-function init () {
+(function (window, document) {
     'use strict';
-    var socket = io.connect(window.location.protocol + window.location.hostname);
-    var synth = new AudioInterface();
-    var ui = new UI(synth);
-    var roomId = createRoomId();
-    var roomURL = window.location.href + '?id=' + roomId;
-    var remoteLink = document.getElementById('remote-url');
+    /*
+     * Creates a random room id
+     */
+    function createRoomId() {
+        var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+        var string_length = 8;
+        var randomstring = '';
+        for (var i = 0; i < string_length; i++) {
+            var rnum = Math.floor(Math.random() * chars.length);
+            randomstring += chars.substring(rnum,rnum+1);
+        }
+        return randomstring;
+    }
 
-    socket.on('filterStart', function(data) {
-        synth.getTouchFreq(data.x, data.y);
-        ui.updateFilter();
-    });
+    /*
+     * Get the party started
+     */
+    function init () {
+        var socket = io.connect(window.location.protocol + window.location.hostname);
+        var synth = new AudioInterface();
+        var ui = new UI(synth);
+        var roomId = createRoomId();
 
-    socket.on('filterMove', function(data) {
-        synth.getTouchFreq(data.x, data.y);
-        ui.updateFilter();
-    });
+        socket.on('filterStart', function(data) {
+            synth.getTouchFreq(data.x, data.y);
+            ui.updateFilter();
+        });
 
-    socket.on('clientSize', function(data) {
-        synth.setRemoteInputSize(data);
-    });
+        socket.on('filterMove', function(data) {
+            synth.getTouchFreq(data.x, data.y);
+            ui.updateFilter();
+        });
 
-    socket.on('connect', function() {
-        socket.emit('room', roomId);
-    });
+        socket.on('clientSize', function(data) {
+            synth.setRemoteInputSize(data);
+        });
 
-    remoteLink.innerHTML = roomURL;
-    remoteLink.setAttribute('href', roomURL);
-}
+        socket.on('connect', function() {
+            socket.emit('room', roomId);
+        });
 
-window.addEventListener('DOMContentLoaded', init, false);
+        document.getElementById('room').innerHTML = roomId;
+    }
+
+    window.addEventListener('DOMContentLoaded', init, false);
+
+}(window, document));
