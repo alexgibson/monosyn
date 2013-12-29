@@ -16,6 +16,10 @@ body {
     padding: 10px;
 }
 
+.component label:after {
+    content: ":";
+}
+
 #keyboard {
     overflow: hidden;
     width: 100%;

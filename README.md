@@ -10,7 +10,6 @@ Monosyn is built using [Web Audio API](http://www.w3.org/TR/webaudio/), [Node.js
 TODO
 ----
 
-* Add second oscillator with detune controls
 * Add envelope control section
 * Add note hold setting
 * Add Keyboard support

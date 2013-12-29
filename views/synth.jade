@@ -6,14 +6,34 @@ html
         script(src='/js/dist/synth.min.js')
     body.
         <div id="synth">
-            <div id="oscillator" class="component">
-                <h2>Oscillator</h2>
-                <select id="osc-1">
+            <div id="oscillator1" class="component">
+                <h2>Oscillator 1</h2>
+                <select id="osc-1" autocomplete="off">
                     <option value="sine">Sine</option>
                     <option value="square" selected>Square</option>
                     <option value="sawtooth">Sawtooth</option>
                     <option value="triangle">Triangle</option>
                 </select>
+                <p>
+                    <input id="osc-1-detune" type="range" min="-50" max="50" step="1" value="-6" autocomplete="off" />
+                    <label for="osc-1-detune">Detune</label>
+                    <output id="osc-1-detune-output" for="osc-1-detune"></output>
+                </p>
+            </div>
+
+            <div id="oscillator2" class="component">
+                <h2>Oscillator 2</h2>
+                <select id="osc-2" autocomplete="off">
+                    <option value="sine">Sine</option>
+                    <option value="square">Square</option>
+                    <option value="sawtooth" selected>Sawtooth</option>
+                    <option value="triangle">Triangle</option>
+                </select>
+                <p>
+                    <input id="osc-2-detune" type="range" min="-50" max="50" step="1" value="-10" autocomplete="off" />
+                    <label for="osc-2-detune">Detune</label>
+                    <output id="osc-2-detune-output" for="osc-2-detune"></output>
+                </p>
             </div>
 
             <div id="filter" class="component">
@@ -30,11 +50,13 @@ html
                 </select>
                 <p>
                     <input id="filter-freq" type="range" min="40" max="12000" step="1" value="12000" autocomplete="off" />
-                    Freq: <output id="filter-freq-output" for="filter-freq"></output>
+                    <label for="filter-freq">Freq</label>
+                    <output id="filter-freq-output" for="filter-freq"></output>
                 </p>
                 <p>
                     <input id="filter-q" type="range" min="1" max="10" step="0.001" value="1" autocomplete="off" />
-                    Q: <output id="filter-q-output" for="filter-q"></output>
+                    <label for="filter-q">Q</label>
+                    <output id="filter-q-output" for="filter-q"></output>
                 </p>
             </div>
 
