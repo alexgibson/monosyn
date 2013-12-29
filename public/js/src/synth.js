@@ -18,7 +18,7 @@
     AudioInterface.prototype.keyDown = function (vel) {
         var now = this.ctx.currentTime;
         this.nodes.oscGain.gain.cancelScheduledValues(now);
-        this.nodes.oscGain.gain.setValueAtTime(0.0, now);
+        this.nodes.oscGain.gain.setValueAtTime(this.nodes.oscGain.gain.value, now);
         this.nodes.oscGain.gain.linearRampToValueAtTime(1.0, now + 0.1);
     };
 
