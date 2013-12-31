@@ -14,6 +14,11 @@
             attack: 0,
             release: 0
         };
+        this.filter = {
+            freq: 12000,
+            q: 1,
+            type: 'lowpass'
+        }
     }
 
     /*
@@ -54,31 +59,17 @@
     };
 
     /*
-     * Set the source oscillator 1 wave value
+     * Set the source oscillator wave values
      */
-    AudioInterface.prototype.setOsc1Wave = function (wave) {
-        this.nodes.osc.setOsc1Wave(wave);
+    AudioInterface.prototype.setOscWave = function (options) {
+        this.nodes.osc.setOscWave(options);
     };
 
     /*
-     * Set the source oscillator 2 wave value
+     * Set the source oscillator detune values
      */
-    AudioInterface.prototype.setOsc2Wave = function (wave) {
-        this.nodes.osc.setOsc2Wave(wave);
-    };
-
-    /*
-     * Set the source oscillator 1 detune value
-     */
-    AudioInterface.prototype.setOsc1Detune = function (cents) {
-        this.nodes.osc.setOsc1Detune(cents);
-    };
-
-    /*
-     * Set the source oscillator 2 detune value
-     */
-    AudioInterface.prototype.setOsc2Detune = function (cents) {
-        this.nodes.osc.setOsc2Detune(cents);
+    AudioInterface.prototype.setOscDetune = function (options) {
+        this.nodes.osc.setOscDetune(options);
     };
 
     /*
@@ -92,10 +83,11 @@
      * Creates a biquad filter and set default values
      */
     AudioInterface.prototype.initBiquadFilter = function (type) {
+        var t = type || this.filter.type;
         this.nodes.filter = this.ctx.createBiquadFilter();
-        this.setFilterType(type);
-        this.setFilterFreq(12000);
-        this.setFilterQuality(1);
+        this.setFilterType(t);
+        this.setFilterFreq(this.filter.freq);
+        this.setFilterQuality(this.filter.q);
     };
 
     /*
