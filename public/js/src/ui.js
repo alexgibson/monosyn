@@ -17,6 +17,8 @@
         this.filterQualityOutput = doc.getElementById('filter-q-output');
         this.envAttack = doc.getElementById('env-attack');
         this.envRelease = doc.getElementById('env-release');
+        this.envAttackOutput = doc.getElementById('env-attack-output');
+        this.envReleaseOutput = doc.getElementById('env-release-output');
         this.keyboard = doc.getElementById('keyboard');
 
         var osc1Wave = this.osc1.options[this.osc1.selectedIndex].value;
@@ -33,6 +35,8 @@
         this.updateFilterQualityOutput(1);
         this.updateOsc1DetuneOutput(this.osc1Detune.value);
         this.updateOsc2DetuneOutput(this.osc2Detune.value);
+        this.updateEnvAttackOutput(this.envAttack.value);
+        this.updateEnvReleaseOutput(this.envRelease.value);
 
         this.bindEvents();
         this.synth.routeComponents();
@@ -41,51 +45,35 @@
     }
 
     UI.prototype.bindEvents = function () {
-        var self = this;
-
         this.keyboard.addEventListener('mousedown', this.noteStart.bind(this), false);
         this.keyboard.addEventListener('mouseup', this.noteEnd.bind(this), false);
         this.keyboard.addEventListener('mouseleave', this.noteEnd.bind(this), false);
 
-        this.filterFreq.addEventListener('input', function () {
-            self.updateFilterFreqOutput(this.value);
-            self.synth.setFilterFreq(this.value);
-        }, false);
+        this.filterFreq.addEventListener('input', this.onFilterFreqChange.bind(this), false);
+        this.filterQuality.addEventListener('input', this.onFilterQualityChange.bind(this), false);
+        this.filterType.addEventListener('change', this.onFilterTypeChange.bind(this), false);
 
-        this.filterQuality.addEventListener('input', function () {
-            self.updateFilterQualityOutput(this.value);
-            self.synth.setFilterQuality(this.value);
-        }, false);
+        this.osc1.addEventListener('change', this.onOsc1WaveChange.bind(this), false);
+        this.osc2.addEventListener('change', this.onOsc2WaveChange.bind(this), false);
+        this.osc1Detune.addEventListener('input', this.onOsc1DetuneChange.bind(this), false);
+        this.osc2Detune.addEventListener('input', this.onOsc2DetuneChange.bind(this), false);
 
-        this.filterType.addEventListener('change', function () {
-            self.synth.setFilterType(this.value);
-        });
+        this.envAttack.addEventListener('input', this.onEnvAttackChange.bind(this), false);
+        this.envRelease.addEventListener('input', this.onEnvReleaseChange.bind(this), false);
+    };
 
-        this.osc1.addEventListener('change', function () {
-            self.synth.setOsc1Wave(this.value);
-        });
+    UI.prototype.onFilterTypeChange = function (e) {
+        this.synth.setFilterType(e.target.value);
+    };
 
-        this.osc2.addEventListener('change', function () {
-            self.synth.setOsc2Wave(this.value);
-        });
+    UI.prototype.onFilterFreqChange = function (e) {
+        this.updateFilterFreqOutput(e.target.value);
+        this.synth.setFilterFreq(e.target.value);
+    };
 
-        this.osc1Detune.addEventListener('input', function () {
-            self.synth.setOsc1Detune(this.value);
-            self.updateOsc1DetuneOutput(this.value);
-        }, false);
-
-        this.osc2Detune.addEventListener('input', function () {
-            self.synth.setOsc2Detune(this.value);
-            self.updateOsc2DetuneOutput(this.value);
-        }, false);
-
-        this.envAttack.addEventListener('input', function () {
-            self.synth.setEnvAttack(this.value);
-        }, false);
-
-        this.envRelease.addEventListener('input', function () {
-            self.synth.setEnvRelease(this.value);
-        }, false);
+    UI.prototype.onFilterQualityChange = function (e) {
+        this.updateFilterQualityOutput(e.target.value);
+        this.synth.setFilterQuality(e.target.value);
     };
 
     UI.prototype.setFilterFreq = function (freq) {
@@ -104,12 +92,48 @@
         this.filterQualityOutput.innerHTML = q;
     };
 
+    UI.prototype.onOsc1WaveChange = function (e) {
+        this.synth.setOsc1Wave(e.target.value);
+    };
+
+    UI.prototype.onOsc2WaveChange = function (e) {
+        this.synth.setOsc2Wave(e.target.value);
+    };
+
+    UI.prototype.onOsc1DetuneChange = function (e) {
+        this.synth.setOsc1Detune(e.target.value);
+        this.updateOsc1DetuneOutput(e.target.value);
+    };
+
+    UI.prototype.onOsc2DetuneChange = function (e) {
+        this.synth.setOsc2Detune(e.target.value);
+        this.updateOsc2DetuneOutput(e.target.value);
+    };
+
     UI.prototype.updateOsc1DetuneOutput = function (cents) {
         this.osc1DetuneOutput.innerHTML = cents;
     };
 
     UI.prototype.updateOsc2DetuneOutput = function (cents) {
         this.osc2DetuneOutput.innerHTML = cents;
+    };
+
+    UI.prototype.onEnvAttackChange = function (e) {
+        this.synth.setEnvAttack(e.target.value);
+        this.updateEnvAttackOutput(e.target.value);
+    };
+
+    UI.prototype.onEnvReleaseChange = function (e) {
+        this.synth.setEnvRelease(e.target.value);
+        this.updateEnvReleaseOutput(e.target.value);
+    };
+
+    UI.prototype.updateEnvAttackOutput = function (time) {
+        this.envAttackOutput.innerHTML = time;
+    };
+
+    UI.prototype.updateEnvReleaseOutput = function (time) {
+        this.envReleaseOutput.innerHTML = time;
     };
 
     UI.prototype.updateFilter = function () {
@@ -125,7 +149,7 @@
         e.preventDefault();
         var key = document.elementFromPoint(e.clientX, e.clientY);
         this.noteDown = true;
-        this.synth.setOscFreq(parseFloat(key.getAttribute('data-id')));
+        this.synth.setOscFreq(key.getAttribute('data-id'));
         this.synth.keyDown();
         this.keyboard.addEventListener('mousemove', this.noteMove.bind(this), false);
     };
@@ -134,7 +158,7 @@
         e.preventDefault();
         var key = document.elementFromPoint(e.clientX, e.clientY);
         if (this.noteDown) {
-            this.synth.setOscFreq(parseFloat(key.getAttribute('data-id')));
+            this.synth.setOscFreq(key.getAttribute('data-id'));
             this.synth.keyMove(1);
         }
     };

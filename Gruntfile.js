@@ -5,8 +5,12 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     uglify: {
       my_target: {
+        options: {
+          mangle: true,
+          beautify: false
+        },
         files: {
-          'public/js/dist/synth.min.js': ['public/js/src/socket.io.min.js', 'public/js/src/ui.js', 'public/js/src/synth.js', 'public/js/src/main.js'],
+          'public/js/dist/synth.min.js': ['public/js/src/socket.io.min.js', 'public/js/src/ui.js', 'public/js/src/oscillator.js', 'public/js/src/synth.js', 'public/js/src/main.js'],
           'public/js/dist/remote.min.js': ['public/js/src/socket.io.min.js', 'public/js/src/remote.js']
         }
       }

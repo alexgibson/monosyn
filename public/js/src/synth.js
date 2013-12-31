@@ -29,8 +29,8 @@
     /*
      * Set the source frequency and gain value on key move
      */
-    AudioInterface.prototype.keyMove = function (vel) {
-        this.nodes.oscGain.gain.value = vel;
+    AudioInterface.prototype.keyMove = function (val) {
+        this.nodes.oscGain.gain.value = val;
     };
 
     /*
@@ -48,40 +48,44 @@
      * Sets a default wave type with muted gain value.
      */
     AudioInterface.prototype.initOscillator = function (wave1, wave2) {
-        this.nodes.osc1 = this.ctx.createOscillator();
-        this.nodes.osc2 = this.ctx.createOscillator();
+        this.nodes.osc = new DualOscillator(this.ctx, wave1, wave2);
         this.nodes.oscGain = this.ctx.createGain();
-        this.setOsc1Wave(wave1);
-        this.setOsc2Wave(wave2);
         this.nodes.oscGain.gain.value = 0;
     };
 
     /*
-     * Set the source oscillator 1 wave type value
+     * Set the source oscillator 1 wave value
      */
     AudioInterface.prototype.setOsc1Wave = function (wave) {
-        this.nodes.osc1.type = wave;
+        this.nodes.osc.setOsc1Wave(wave);
     };
 
     /*
-     * Set the source oscillator 2 wave type value
+     * Set the source oscillator 2 wave value
      */
     AudioInterface.prototype.setOsc2Wave = function (wave) {
-        this.nodes.osc2.type = wave;
+        this.nodes.osc.setOsc2Wave(wave);
     };
 
     /*
      * Set the source oscillator 1 detune value
      */
-    AudioInterface.prototype.setOsc1Detune = function (wave) {
-        this.nodes.osc1.detune.value = wave;
+    AudioInterface.prototype.setOsc1Detune = function (cents) {
+        this.nodes.osc.setOsc1Detune(cents);
     };
 
     /*
      * Set the source oscillator 2 detune value
      */
-    AudioInterface.prototype.setOsc2Detune = function (wave) {
-        this.nodes.osc2.detune.value = wave;
+    AudioInterface.prototype.setOsc2Detune = function (cents) {
+        this.nodes.osc.setOsc2Detune(cents);
+    };
+
+    /*
+     * Set the source oscillator frequency values
+     */
+    AudioInterface.prototype.setOscFreq = function (freq) {
+        this.nodes.osc.setFreq(freq);
     };
 
     /*
@@ -92,14 +96,6 @@
         this.setFilterType(type);
         this.setFilterFreq(12000);
         this.setFilterQuality(1);
-    };
-
-    /*
-     * Set the source oscillator frequency values
-     */
-    AudioInterface.prototype.setOscFreq = function (freq) {
-        this.nodes.osc1.frequency.value = freq;
-        this.nodes.osc2.frequency.value = freq;
     };
 
     /*
@@ -149,12 +145,10 @@
     };
 
     AudioInterface.prototype.routeComponents = function (out) {
-        this.nodes.osc1.connect(this.nodes.filter);
-        this.nodes.osc2.connect(this.nodes.filter);
+        this.nodes.osc.connect(this.nodes.filter);
         this.nodes.filter.connect(this.nodes.oscGain);
         this.nodes.oscGain.connect(this.output);
-        this.nodes.osc1.start(0);
-        this.nodes.osc2.start(0);
+        this.nodes.osc.start(0);
     };
 
     /*
@@ -174,8 +168,7 @@
      * Holy sh*t stop the noise already!
      */
     AudioInterface.prototype.kill = function () {
-        this.nodes.osc1.stop(0);
-        this.nodes.osc2.stop(0);
+        this.nodes.osc.stop(0);
         this.nodes.masterGain.disconnect(this.ctx.destination);
     };
 
