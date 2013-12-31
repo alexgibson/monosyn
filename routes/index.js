@@ -8,8 +8,8 @@ exports.index = function(req, res) {
     res.header("Expires", 0);
 
     if(/mobile/i.test(ua)) {
-        res.render('remote');
+        res.render('remote', { title: 'Monosyn' });
     } else {
-        res.render('synth');
+        res.render('synth', { title: 'Monosyn' });
     }
 };

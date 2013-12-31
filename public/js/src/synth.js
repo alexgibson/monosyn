@@ -10,6 +10,10 @@
         this.output = this.initMasterOut();
         this.remoteWidth = null;
         this.remoteHeight = null;
+        this.env = {
+            attack: 0,
+            release: 0
+        };
     }
 
     /*
@@ -18,8 +22,8 @@
     AudioInterface.prototype.keyDown = function (vel) {
         var now = this.ctx.currentTime;
         this.nodes.oscGain.gain.cancelScheduledValues(now);
-        this.nodes.oscGain.gain.setValueAtTime(this.nodes.oscGain.gain.value, now);
-        this.nodes.oscGain.gain.linearRampToValueAtTime(1.0, now + 0.1);
+        this.nodes.oscGain.gain.setValueAtTime(0, now);
+        this.nodes.oscGain.gain.linearRampToValueAtTime(1, now + this.env.attack);
     };
 
     /*
@@ -35,8 +39,8 @@
     AudioInterface.prototype.keyUp = function () {
         var now = this.ctx.currentTime;
         this.nodes.oscGain.gain.cancelScheduledValues(now);
-        this.nodes.oscGain.gain.setValueAtTime(this.nodes.oscGain.gain.value, now);
-        this.nodes.oscGain.gain.linearRampToValueAtTime(0.0, now + 0.2);
+        this.nodes.oscGain.gain.setValueAtTime(1, now);
+        this.nodes.oscGain.gain.linearRampToValueAtTime(0, now + this.env.release);
     };
 
     /*
@@ -134,6 +138,14 @@
 
     AudioInterface.prototype.setFilterQuality = function (q) {
         this.nodes.filter.Q.value = q;
+    };
+
+    AudioInterface.prototype.setEnvAttack = function (time) {
+        this.env.attack = parseFloat(time);
+    };
+
+    AudioInterface.prototype.setEnvRelease = function (time) {
+        this.env.release = parseFloat(time);
     };
 
     AudioInterface.prototype.routeComponents = function (out) {

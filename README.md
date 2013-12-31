@@ -10,8 +10,7 @@ Monosyn is built using [Web Audio API](http://www.w3.org/TR/webaudio/), [Node.js
 TODO
 ----
 
-* Add envelope control section
-* Add note hold setting
+* Add Decay and Sustain settings to envolope
 * Add Keyboard support
 * Synth needs a decent UI!
 * Remote filter control also needs a UI

@@ -15,6 +15,8 @@
         this.filterQuality = doc.getElementById('filter-q');
         this.filterFreqOutput = doc.getElementById('filter-freq-output');
         this.filterQualityOutput = doc.getElementById('filter-q-output');
+        this.envAttack = doc.getElementById('env-attack');
+        this.envRelease = doc.getElementById('env-release');
         this.keyboard = doc.getElementById('keyboard');
 
         var osc1Wave = this.osc1.options[this.osc1.selectedIndex].value;
@@ -24,6 +26,8 @@
         this.synth.initBiquadFilter(this.filterType.options[this.filterType.selectedIndex].value);
         this.synth.setOsc1Detune(this.osc1Detune.value);
         this.synth.setOsc2Detune(this.osc2Detune.value);
+        this.synth.setEnvAttack(this.envAttack.value);
+        this.synth.setEnvRelease(this.envRelease.value);
 
         this.updateFilterFreqOutput(12000);
         this.updateFilterQualityOutput(1);
@@ -32,6 +36,8 @@
 
         this.bindEvents();
         this.synth.routeComponents();
+
+        this.noteDown = false;
     }
 
     UI.prototype.bindEvents = function () {
@@ -72,6 +78,14 @@
             self.synth.setOsc2Detune(this.value);
             self.updateOsc2DetuneOutput(this.value);
         }, false);
+
+        this.envAttack.addEventListener('input', function () {
+            self.synth.setEnvAttack(this.value);
+        }, false);
+
+        this.envRelease.addEventListener('input', function () {
+            self.synth.setEnvRelease(this.value);
+        }, false);
     };
 
     UI.prototype.setFilterFreq = function (freq) {
@@ -110,6 +124,7 @@
     UI.prototype.noteStart = function (e) {
         e.preventDefault();
         var key = document.elementFromPoint(e.clientX, e.clientY);
+        this.noteDown = true;
         this.synth.setOscFreq(parseFloat(key.getAttribute('data-id')));
         this.synth.keyDown();
         this.keyboard.addEventListener('mousemove', this.noteMove.bind(this), false);
@@ -118,14 +133,19 @@
     UI.prototype.noteMove = function (e) {
         e.preventDefault();
         var key = document.elementFromPoint(e.clientX, e.clientY);
-        this.synth.setOscFreq(parseFloat(key.getAttribute('data-id')));
-        this.synth.keyMove(1);
+        if (this.noteDown) {
+            this.synth.setOscFreq(parseFloat(key.getAttribute('data-id')));
+            this.synth.keyMove(1);
+        }
     };
 
     UI.prototype.noteEnd = function (e) {
         e.preventDefault();
-        this.synth.keyUp();
-        this.keyboard.removeEventListener('mousemove', this.noteMove.bind(this), false);
+        if (this.noteDown) {
+            this.synth.keyUp();
+            this.keyboard.removeEventListener('mousemove', this.noteMove.bind(this), false);
+            this.noteDown = false;
+        }
     };
 
     window.UI = UI;
