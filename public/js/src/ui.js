@@ -121,6 +121,15 @@
         this.envAttackOutput.innerHTML = e.target.value;
     };
 
+    UI.prototype.updateFilter = function () {
+        var freq = this.synth.getFilterFreq();
+        var q = this.synth.getFilterQuality();
+        this.filterFreq.value = freq;
+        this.filterFreqOutput.innerHTML = freq;
+        this.filterQuality.value = q;
+        this.filterQualityOutput.innerHTML = q;
+    };
+
     UI.prototype.noteStart = function (e) {
         var key = document.elementFromPoint(e.clientX, e.clientY);
         e.preventDefault();
