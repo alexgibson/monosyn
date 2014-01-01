@@ -14,6 +14,7 @@ TODO
 * Add Keyboard support
 * Synth needs a decent UI!
 * Remote filter control also needs a UI
+* Ability to load/save presets as JSON.
 * Support mobile device orientation change
 * Installation and setup instructions
 
