@@ -23,26 +23,23 @@
 
         this.noteDown = false;
 
-        this.setSynthDefaults();
+        this.osc = this.synth.osc();
+
+        this.synth.loadPreset({
+            osc1Wave: this.osc1.options[this.osc1.selectedIndex].value,
+            osc2Wave: this.osc2.options[this.osc2.selectedIndex].value,
+            osc1Detune: this.osc1Detune.value,
+            osc2Detune: this.osc2Detune.value,
+            filterType: this.filterType.options[this.filterType.selectedIndex].value,
+            filterFreq: this.filterFreq.value,
+            filterQuality: this.filterQuality.value,
+            envAttack: this.envAttack.value,
+            envRelease: this.envRelease.value
+        });
+
         this.setOutputDefaults();
         this.bindEvents();
     }
-
-    UI.prototype.setSynthDefaults = function () {
-        var osc1Wave = this.osc1.options[this.osc1.selectedIndex].value;
-        var osc2Wave = this.osc2.options[this.osc2.selectedIndex].value;
-
-        this.synth.initOscillator(osc1Wave, osc2Wave);
-        this.synth.initBiquadFilter(this.filterType.options[this.filterType.selectedIndex].value);
-        this.synth.setOscDetune({
-            osc1: this.osc1Detune.value,
-            osc2: this.osc2Detune.value
-        });
-        this.synth.setEnvAttack(this.envAttack.value);
-        this.synth.setEnvRelease(this.envRelease.value);
-        this.synth.routeComponents();
-    }
-
 
     UI.prototype.setOutputDefaults = function () {
         this.filterFreqOutput.innerHTML = 12000;
@@ -86,26 +83,26 @@
     };
 
     UI.prototype.onOsc1WaveChange = function (e) {
-        this.synth.setOscWave({
+        this.osc.setOscWave({
             wave1: e.target.value
         });
     };
 
     UI.prototype.onOsc2WaveChange = function (e) {
-        this.synth.setOscWave({
+        this.osc.setOscWave({
             wave2: e.target.value
         });
     };
 
     UI.prototype.onOsc1DetuneChange = function (e) {
-        this.synth.setOscDetune({
+        this.osc.setOscDetune({
             osc1: e.target.value
         });
         this.osc1DetuneOutput.innerHTML = e.target.value;
     };
 
     UI.prototype.onOsc2DetuneChange = function (e) {
-        this.synth.setOscDetune({
+        this.osc.setOscDetune({
             osc2: e.target.value
         });
         this.osc2DetuneOutput.innerHTML = e.target.value;
@@ -113,12 +110,12 @@
 
     UI.prototype.onEnvAttackChange = function (e) {
         this.synth.setEnvAttack(e.target.value);
-        this.envReleaseOutput.innerHTML = e.target.value;
+        this.envAttackOutput.innerHTML = e.target.value;
     };
 
     UI.prototype.onEnvReleaseChange = function (e) {
         this.synth.setEnvRelease(e.target.value);
-        this.envAttackOutput.innerHTML = e.target.value;
+        this.envReleaseOutput.innerHTML = e.target.value;
     };
 
     UI.prototype.updateFilter = function () {
@@ -134,7 +131,7 @@
         var key = document.elementFromPoint(e.clientX, e.clientY);
         e.preventDefault();
         this.noteDown = true;
-        this.synth.setOscFreq(key.getAttribute('data-id'));
+        this.osc.setFreq(key.getAttribute('data-id'));
         this.synth.keyDown();
         this.keyboard.addEventListener('mousemove', this.noteMove.bind(this), false);
     };
@@ -143,7 +140,7 @@
         var key = document.elementFromPoint(e.clientX, e.clientY);
         e.preventDefault();
         if (this.noteDown) {
-            this.synth.setOscFreq(key.getAttribute('data-id'));
+            this.osc.setFreq(key.getAttribute('data-id'));
             this.synth.keyMove(1);
         }
     };

@@ -7,19 +7,34 @@
     function AudioInterface () {
         this.ctx = new AudioContext();
         this.nodes = {};
-        this.output = this.initMasterOut();
         this.remoteWidth = null;
         this.remoteHeight = null;
         this.env = {
             attack: 0,
             release: 0
         };
-        this.filter = {
-            freq: 12000,
-            q: 1,
-            type: 'lowpass'
-        }
+        this.initComponents();
+        this.routeComponents();
     }
+
+    AudioInterface.prototype.initComponents = function () {
+        this.nodes.osc = new DualOscillator(this.ctx);
+        this.nodes.oscGain = this.ctx.createGain();
+        this.nodes.oscGain.gain.value = 0;
+        this.nodes.filter = this.ctx.createBiquadFilter();
+        this.nodes.masterComp = this.ctx.createDynamicsCompressor();
+        this.nodes.masterGain = this.ctx.createGain();
+        this.nodes.masterGain.gain.value = 0.9;
+    };
+
+    AudioInterface.prototype.routeComponents = function (out) {
+        this.nodes.osc.connect(this.nodes.filter);
+        this.nodes.filter.connect(this.nodes.oscGain);
+        this.nodes.oscGain.connect(this.nodes.masterComp);
+        this.nodes.masterComp.connect(this.nodes.masterGain);
+        this.nodes.masterGain.connect(this.ctx.destination);
+        this.nodes.osc.start(0);
+    };
 
     /*
      * Set the source frequency and gain value on key down
@@ -46,48 +61,6 @@
         this.nodes.oscGain.gain.cancelScheduledValues(now);
         this.nodes.oscGain.gain.setValueAtTime(1, now);
         this.nodes.oscGain.gain.linearRampToValueAtTime(0, now + this.env.release);
-    };
-
-    /*
-     * Creates a source oscillator with it's own gain control.
-     * Sets a default wave type with muted gain value.
-     */
-    AudioInterface.prototype.initOscillator = function (wave1, wave2) {
-        this.nodes.osc = new DualOscillator(this.ctx, wave1, wave2);
-        this.nodes.oscGain = this.ctx.createGain();
-        this.nodes.oscGain.gain.value = 0;
-    };
-
-    /*
-     * Set the source oscillator wave values
-     */
-    AudioInterface.prototype.setOscWave = function (options) {
-        this.nodes.osc.setOscWave(options);
-    };
-
-    /*
-     * Set the source oscillator detune values
-     */
-    AudioInterface.prototype.setOscDetune = function (options) {
-        this.nodes.osc.setOscDetune(options);
-    };
-
-    /*
-     * Set the source oscillator frequency values
-     */
-    AudioInterface.prototype.setOscFreq = function (freq) {
-        this.nodes.osc.setFreq(freq);
-    };
-
-    /*
-     * Creates a biquad filter and set default values
-     */
-    AudioInterface.prototype.initBiquadFilter = function (type) {
-        var t = type || this.filter.type;
-        this.nodes.filter = this.ctx.createBiquadFilter();
-        this.setFilterType(t);
-        this.setFilterFreq(this.filter.freq);
-        this.setFilterQuality(this.filter.q);
     };
 
     /*
@@ -136,26 +109,6 @@
         this.env.release = parseFloat(time);
     };
 
-    AudioInterface.prototype.routeComponents = function (out) {
-        this.nodes.osc.connect(this.nodes.filter);
-        this.nodes.filter.connect(this.nodes.oscGain);
-        this.nodes.oscGain.connect(this.output);
-        this.nodes.osc.start(0);
-    };
-
-    /*
-     * Master output component consists of a dynamics compressor
-     * and volume gain mapped to the AudioContext destination.
-     */
-    AudioInterface.prototype.initMasterOut = function () {
-        this.nodes.masterComp = this.ctx.createDynamicsCompressor();
-        this.nodes.masterGain = this.ctx.createGain();
-        this.nodes.masterGain.gain.value = 0.9;
-        this.nodes.masterComp.connect(this.nodes.masterGain);
-        this.nodes.masterGain.connect(this.ctx.destination);
-        return this.nodes.masterComp;
-    };
-
     /*
      * Holy sh*t stop the noise already!
      */
@@ -167,6 +120,27 @@
     AudioInterface.prototype.setRemoteInputSize = function (data) {
         this.remoteWidth = data.x;
         this.remoteHeight = data.y;
+    };
+
+    AudioInterface.prototype.loadPreset = function (options) {
+        this.nodes.osc.setOscWave({
+            wave1: options.osc1Wave,
+            wave2: options.osc2Wave
+        });
+        this.nodes.osc.setOscDetune({
+            osc1: options.osc1Detune,
+            osc2: options.osc2Detune
+        });
+
+        this.setFilterType(options.filterType);
+        this.setFilterFreq(options.filterFreq);
+        this.setFilterQuality(options.filterQuality);
+        this.setEnvAttack(options.envAttack);
+        this.setEnvRelease(options.envRelease);
+    };
+
+    AudioInterface.prototype.osc = function () {
+        return this.nodes.osc;
     };
 
     window.AudioInterface = AudioInterface;

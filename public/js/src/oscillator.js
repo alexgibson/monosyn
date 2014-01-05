@@ -1,13 +1,9 @@
 (function (window, document) {
     'use strict';
 
-    function DualOscillator (context, wave1, wave2) {
-        this.osc1 = context.createOscillator();
-        this.osc2 = context.createOscillator();
-        this.setOscWave({
-            wave1: wave1,
-            wave2: wave2
-        });
+    function DualOscillator (ctx) {
+        this.osc1 = ctx.createOscillator();
+        this.osc2 = ctx.createOscillator();
     }
 
     DualOscillator.prototype.connect = function (output) {
