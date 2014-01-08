@@ -11,8 +11,11 @@ TODO
 ----
 
 * Add Decay and Sustain settings to envelope
-* Add LFO modulator
+* Add LFO modulator?
 * Add Querty Keyboard support
+* Custom waveshaper?
+* Convolution reverb?
+* Delay unit?
 * Synth needs a decent UI!
 * Remote filter control also needs a UI
 * Ability to load/save presets as JSON.
