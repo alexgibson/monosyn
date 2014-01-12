@@ -129,18 +129,20 @@
 
     UI.prototype.noteStart = function (e) {
         var key = document.elementFromPoint(e.clientX, e.clientY);
+        var freq = this.synth.getFreqFromNote(key.getAttribute('data-id'));
         e.preventDefault();
         this.noteDown = true;
-        this.osc.setFreq(key.getAttribute('data-id'));
+        this.osc.setFreq(freq);
         this.synth.keyDown();
         this.keyboard.addEventListener('mousemove', this.noteMove.bind(this), false);
     };
 
     UI.prototype.noteMove = function (e) {
         var key = document.elementFromPoint(e.clientX, e.clientY);
+        var freq = this.synth.getFreqFromNote(key.getAttribute('data-id'));
         e.preventDefault();
         if (this.noteDown) {
-            this.osc.setFreq(key.getAttribute('data-id'));
+            this.osc.setFreq(freq);
             this.synth.keyMove(1);
         }
     };

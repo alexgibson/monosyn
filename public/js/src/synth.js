@@ -77,6 +77,10 @@
         this.setFilterFreq(Math.round(freq));
     };
 
+    AudioInterface.prototype.getFreqFromNote = function (note) {
+        return 440 * Math.pow(2, (note - 49) / 12);
+    };
+
     AudioInterface.prototype.getFilterType = function (type) {
         return this.nodes.filter.type;
     };
