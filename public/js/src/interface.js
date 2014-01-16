@@ -1,9 +1,8 @@
 (function (window, document) {
     'use strict';
 
-    function UI (synth) {
+    function AudioInterface (engine) {
         var doc = document;
-        this.synth = synth;
         this.osc1 = doc.getElementById('osc-1');
         this.osc2 = doc.getElementById('osc-2');
         this.osc1Detune = doc.getElementById('osc-1-detune');
@@ -20,12 +19,20 @@
         this.envAttackOutput = doc.getElementById('env-attack-output');
         this.envReleaseOutput = doc.getElementById('env-release-output');
         this.keyboard = doc.getElementById('keyboard');
+        this.synthId = doc.getElementById('synth-id');
+
+        if (!engine || !engine instanceof AudioEngine) {
+            throw new Error('AudioInterface() first arg must be instance of AudioEngine');
+        }
+
+        this.engine = engine;
 
         this.noteDown = false;
+        this.currentNote = null;
 
-        this.osc = this.synth.osc();
+        this.osc = this.engine.getSource();
 
-        this.synth.loadPreset({
+        this.options = {
             osc1Wave: this.osc1.options[this.osc1.selectedIndex].value,
             osc2Wave: this.osc2.options[this.osc2.selectedIndex].value,
             osc1Detune: this.osc1Detune.value,
@@ -35,25 +42,28 @@
             filterQuality: this.filterQuality.value,
             envAttack: this.envAttack.value,
             envRelease: this.envRelease.value
-        });
+        };
+
+        this.engine.loadPreset(this.options);
 
         this.setOutputDefaults();
         this.bindEvents();
     }
 
-    UI.prototype.setOutputDefaults = function () {
-        this.filterFreqOutput.innerHTML = 12000;
-        this.filterQualityOutput.innerHTML = 1;
-        this.osc1DetuneOutput.innerHTML = this.osc1Detune.value;
-        this.osc2DetuneOutput.innerHTML = this.osc2Detune.value;
-        this.envAttackOutput.innerHTML = this.envAttack.value;
-        this.envReleaseOutput.innerHTML = this.envRelease.value;
+    AudioInterface.prototype.setOutputDefaults = function () {
+        this.filterFreqOutput.innerHTML = this.options.filterFreq;
+        this.filterQualityOutput.innerHTML = this.options.filterQuality;
+        this.osc1DetuneOutput.innerHTML = this.options.osc1Detune;
+        this.osc2DetuneOutput.innerHTML = this.options.osc2Detune;
+        this.envAttackOutput.innerHTML = this.options.envAttack;
+        this.envReleaseOutput.innerHTML = this.options.envRelease;
+        this.synthId.innerHTML = this.engine.getId();
     };
 
-    UI.prototype.bindEvents = function () {
-        this.keyboard.addEventListener('mousedown', this.noteStart.bind(this), false);
-        this.keyboard.addEventListener('mouseup', this.noteEnd.bind(this), false);
-        this.keyboard.addEventListener('mouseleave', this.noteEnd.bind(this), false);
+    AudioInterface.prototype.bindEvents = function () {
+        this.keyboard.addEventListener('mousedown', this.keyDown.bind(this), false);
+        this.keyboard.addEventListener('mouseup', this.keyUp.bind(this), false);
+        this.keyboard.addEventListener('mouseleave', this.keyUp.bind(this), false);
 
         this.filterFreq.addEventListener('input', this.onFilterFreqChange.bind(this), false);
         this.filterQuality.addEventListener('input', this.onFilterQualityChange.bind(this), false);
@@ -68,94 +78,96 @@
         this.envRelease.addEventListener('input', this.onEnvReleaseChange.bind(this), false);
     };
 
-    UI.prototype.onFilterTypeChange = function (e) {
-        this.synth.setFilterType(e.target.value);
+    AudioInterface.prototype.onFilterTypeChange = function (e) {
+        this.engine.setFilterType(e.target.value);
     };
 
-    UI.prototype.onFilterFreqChange = function (e) {
-        this.synth.setFilterFreq(e.target.value);
+    AudioInterface.prototype.onFilterFreqChange = function (e) {
+        this.engine.setFilterFreq(e.target.value);
         this.filterFreqOutput.innerHTML = e.target.value;
     };
 
-    UI.prototype.onFilterQualityChange = function (e) {
-        this.synth.setFilterQuality(e.target.value);
+    AudioInterface.prototype.onFilterQualityChange = function (e) {
+        this.engine.setFilterQuality(e.target.value);
         this.filterQualityOutput.innerHTML = e.target.value;
     };
 
-    UI.prototype.onOsc1WaveChange = function (e) {
+    AudioInterface.prototype.onOsc1WaveChange = function (e) {
         this.osc.setOscWave({
             wave1: e.target.value
         });
     };
 
-    UI.prototype.onOsc2WaveChange = function (e) {
+    AudioInterface.prototype.onOsc2WaveChange = function (e) {
         this.osc.setOscWave({
             wave2: e.target.value
         });
     };
 
-    UI.prototype.onOsc1DetuneChange = function (e) {
+    AudioInterface.prototype.onOsc1DetuneChange = function (e) {
         this.osc.setOscDetune({
             osc1: e.target.value
         });
         this.osc1DetuneOutput.innerHTML = e.target.value;
     };
 
-    UI.prototype.onOsc2DetuneChange = function (e) {
+    AudioInterface.prototype.onOsc2DetuneChange = function (e) {
         this.osc.setOscDetune({
             osc2: e.target.value
         });
         this.osc2DetuneOutput.innerHTML = e.target.value;
     };
 
-    UI.prototype.onEnvAttackChange = function (e) {
-        this.synth.setEnvAttack(e.target.value);
+    AudioInterface.prototype.onEnvAttackChange = function (e) {
+        this.engine.setEnvAttack(e.target.value);
         this.envAttackOutput.innerHTML = e.target.value;
     };
 
-    UI.prototype.onEnvReleaseChange = function (e) {
-        this.synth.setEnvRelease(e.target.value);
+    AudioInterface.prototype.onEnvReleaseChange = function (e) {
+        this.engine.setEnvRelease(e.target.value);
         this.envReleaseOutput.innerHTML = e.target.value;
     };
 
-    UI.prototype.updateFilter = function () {
-        var freq = this.synth.getFilterFreq();
-        var q = this.synth.getFilterQuality();
+    AudioInterface.prototype.updateFilter = function () {
+        var freq = this.engine.getFilterFreq();
+        var q = this.engine.getFilterQuality();
         this.filterFreq.value = freq;
         this.filterFreqOutput.innerHTML = freq;
         this.filterQuality.value = q;
         this.filterQualityOutput.innerHTML = q;
     };
 
-    UI.prototype.noteStart = function (e) {
+    AudioInterface.prototype.keyDown = function (e) {
         var key = document.elementFromPoint(e.clientX, e.clientY);
-        var freq = this.synth.getFreqFromNote(key.getAttribute('data-id'));
+        var freq = this.engine.getFreqFromNote(key.getAttribute('data-id'));
         e.preventDefault();
         this.noteDown = true;
+        this.currentNote = freq;
         this.osc.setFreq(freq);
-        this.synth.keyDown();
-        this.keyboard.addEventListener('mousemove', this.noteMove.bind(this), false);
+        this.engine.noteStart();
+        this.keyboard.addEventListener('mousemove', this.keyMove.bind(this), false);
     };
 
-    UI.prototype.noteMove = function (e) {
+    AudioInterface.prototype.keyMove = function (e) {
         var key = document.elementFromPoint(e.clientX, e.clientY);
-        var freq = this.synth.getFreqFromNote(key.getAttribute('data-id'));
+        var freq = this.engine.getFreqFromNote(key.getAttribute('data-id'));
         e.preventDefault();
-        if (this.noteDown) {
+        if (this.noteDown && this.currentNote !== freq) {
             this.osc.setFreq(freq);
-            this.synth.keyMove(1);
+            this.engine.noteMove(1);
         }
     };
 
-    UI.prototype.noteEnd = function (e) {
+    AudioInterface.prototype.keyUp = function (e) {
         e.preventDefault();
         if (this.noteDown) {
-            this.synth.keyUp();
-            this.keyboard.removeEventListener('mousemove', this.noteMove.bind(this), false);
+            this.engine.noteEnd();
+            this.keyboard.removeEventListener('mousemove', this.keyMove.bind(this), false);
             this.noteDown = false;
+            this.currentNote = null;
         }
     };
 
-    window.UI = UI;
+    window.AudioInterface = AudioInterface;
 
 }(window, document));

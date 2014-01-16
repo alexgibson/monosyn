@@ -9,7 +9,7 @@ module.exports = function(grunt) {
       },
       basic_and_extras: {
         files: {
-          'public/js/dist/synth.min.js': ['public/js/src/socket.io.min.js', 'public/js/src/ui.js', 'public/js/src/oscillator.js', 'public/js/src/synth.js', 'public/js/src/main.js'],
+          'public/js/dist/synth.min.js': ['public/js/src/socket.io.min.js', 'public/js/src/interface.js', 'public/js/src/oscillator.js', 'public/js/src/engine.js', 'public/js/src/main.js'],
           'public/js/dist/remote.min.js': ['public/js/src/socket.io.min.js', 'public/js/src/remote.js']
         },
       },

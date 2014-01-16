@@ -1,19 +1,9 @@
 (function (window, document) {
     'use strict';
 
-    function getUrlVars() {
-        var vars = {};
-        var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m, key, value) {
-            vars[key] = value;
-        });
-        return vars;
-    }
-
     function init () {
         var socket = io.connect(window.location.protocol + window.location.hostname);
-
         var filterPad = document.getElementById('filter');
-        var urlVars = getUrlVars();
         var roomId = prompt('Join room');
 
         if (!roomId) {
@@ -53,8 +43,8 @@
 
         function clientSize () {
             socket.emit('remoteClientSize', {
-                x: filterPad.clientWidth,
-                y: filterPad.clientHeight,
+                remoteWidth: filterPad.clientWidth,
+                remoteHeight: filterPad.clientHeight,
                 room: roomId
             });
         }
