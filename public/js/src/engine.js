@@ -17,7 +17,6 @@
             filterQuality: 1,
             attack: 0,
             release: 0,
-            keys: 49,
             remoteWidth: null,
             remoteHeight: null
 
@@ -118,7 +117,7 @@
      * @return frequency (number)
      */
     AudioEngine.prototype.getFreqFromNote = function (note) {
-        return 440 * Math.pow(2, (note - this.options.keys) / 12);
+        return 440 * Math.pow(2, (note - 49) / 12);
     };
 
     AudioEngine.prototype.getFilterType = function (type) {

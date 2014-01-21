@@ -155,6 +155,7 @@
         if (this.noteDown && this.currentNote !== freq) {
             this.osc.setFreq(freq);
             this.engine.noteMove(1);
+            this.currentNote = freq;
         }
     };
 
