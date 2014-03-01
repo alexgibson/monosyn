@@ -7,9 +7,13 @@ exports.index = function(req, res) {
     res.header("Pragma", "no-cache");
     res.header("Expires", 0);
 
-    if(/mobile/i.test(ua)) {
-        res.render('remote', { title: 'Monosyn' });
+    if(/mobi|tablet/i.test(ua)) {
+        res.render('remote', {
+            title: 'Monosyn'
+        });
     } else {
-        res.render('synth', { title: 'Monosyn' });
+        res.render('synth', {
+            title: 'Monosyn'
+        });
     }
 };
