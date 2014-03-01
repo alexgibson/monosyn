@@ -4,7 +4,7 @@
     function init () {
         var socket = io.connect(window.location.protocol + window.location.hostname);
         var filterPad = document.getElementById('filter');
-        var roomId = prompt('Join room');
+        var roomId = prompt('Enter synth ID to connect touch control');
 
         if (!roomId) {
             return;

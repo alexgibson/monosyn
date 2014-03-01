@@ -8,8 +8,10 @@
     <script src="/js/dist/synth.min.js"></script>
   </head>
   <body>
-    <div id="synth">
-      <div id="oscillator1" class="component">
+    <main role="main" id="synth">
+      <h1>{{title}}</h1>
+      <p class="synth-id-label">Synth ID: <span id="synth-id"></span></p>
+      <section id="oscillator1" class="component">
         <h2>Oscillator 1</h2>
         <select id="osc-1" autocomplete="off">
           <option value="sine">Sine</option>
@@ -18,12 +20,13 @@
           <option value="triangle">Triangle</option>
         </select>
         <p>
-          <input id="osc-1-detune" type="range" min="-50" max="50" step="1" value="-6" autocomplete="off" />
           <label for="osc-1-detune">Detune</label>
           <output id="osc-1-detune-output" for="osc-1-detune"></output>
+          <input id="osc-1-detune" type="range" min="-50" max="50" step="1" value="-6" autocomplete="off" />
         </p>
-      </div>
-      <div id="oscillator2" class="component">
+      </section>
+
+      <section id="oscillator2" class="component">
           <h2>Oscillator 2</h2>
           <select id="osc-2" autocomplete="off">
             <option value="sine">Sine</option>
@@ -32,12 +35,13 @@
             <option value="triangle">Triangle</option>
           </select>
           <p>
-            <input id="osc-2-detune" type="range" min="-50" max="50" step="1" value="-10" autocomplete="off" />
             <label for="osc-2-detune">Detune</label>
             <output id="osc-2-detune-output" for="osc-2-detune"></output>
+            <input id="osc-2-detune" type="range" min="-50" max="50" step="1" value="-10" autocomplete="off" />
           </p>
-      </div>
-      <div id="filter" class="component">
+      </section>
+
+      <section id="filter" class="component">
           <h2>Filter</h2>
           <select id="filter-type">
             <option value="lowpass" selected>Lowpass</option>
@@ -50,31 +54,30 @@
             <option value="allpass">All Pass</option>
           </select>
           <p>
-            <input id="filter-freq" type="range" min="40" max="12000" step="1" value="12000" autocomplete="off" />
             <label for="filter-freq">Freq</label>
             <output id="filter-freq-output" for="filter-freq"></output>
+            <input id="filter-freq" type="range" min="40" max="12000" step="1" value="12000" autocomplete="off" />
           </p>
           <p>
-            <input id="filter-q" type="range" min="1" max="10" step="0.001" value="1" autocomplete="off" />
             <label for="filter-q">Q</label>
             <output id="filter-q-output" for="filter-q"></output>
+            <input id="filter-q" type="range" min="1" max="10" step="0.001" value="1" autocomplete="off" />
           </p>
-      </div>
-      <div id="envolope" class="component">
+      </section>
+
+      <section id="envolope" class="component">
         <h2>Envolope</h2>
         <p>
-          <input id="env-attack" type="range" min="0" max="2.0" step="0.1" value="0.1" autocomplete="off" />
           <label for="env-attack">Attack</label>
           <output id="env-attack-output" for="env-attack"></output>
+          <input id="env-attack" type="range" min="0" max="2.0" step="0.1" value="0.1" autocomplete="off" />
         </p>
         <p>
-          <input id="env-release" type="range" min="0" max="2.0" step="0.1" value="0.2" autocomplete="off" />
           <label for="env-release">Release</label>
           <output id="env-release-output" for="env-release"></output>
+          <input id="env-release" type="range" min="0" max="2.0" step="0.1" value="0.2" autocomplete="off" />
         </p>
-      </div>
-
-      <p>Synth ID: <span id="synth-id"></span></p>
+      </section>
 
       <ul id="keyboard">
         <li class="key" data-id="4" tabindex="-1">
@@ -164,6 +167,6 @@
         <li class="key" data-id="63"></li>
         <li class="key" data-id="64"></li>
       </ul>
-    </div>
+    </main>
   </body>
 </html>

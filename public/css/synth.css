@@ -2,18 +2,35 @@ html,
 body {
     margin: 0;
     padding: 0;
+    background: #000;
 }
 
 #synth {
-    width: 1176px;
-    margin: 0 auto;
-    background: rgba(0,0,0,0.1);
+    position: relative;
+    width: 864px;
+    margin: 20px auto;
+    background: #fff;
     border: 1px solid black;
+}
+
+h1 {
+    margin: 20px 0 0 20px;
+}
+
+.synth-id-label {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-weight: bold;
+}
+
+input[type="range"] {
+    display: block;
 }
 
 .component {
     float: left;
-    padding: 10px;
+    margin: 0 0 20px 20px;
 }
 
 .component label:after {
@@ -41,6 +58,11 @@ body {
     background: #fff;
     overflow: visible;
     cursor: pointer;
+    box-shadow: inset 0 1px 0px #fff,
+                inset 0 -1px 0px #fff,
+                inset 1px 0px 0px #fff,
+                inset -1px 0px 0px #fff,
+                0 4px 3px rgba(0,0,0,0.7);
 }
 
 .black {
@@ -54,8 +76,13 @@ body {
     color: white;
     z-index: 2;
     cursor: pointer;
+    box-shadow: inset 0px -1px 2px rgba(255,255,255,0.4),
+                0 2px 3px rgba(0,0,0,0.4);
 }
 
-.pressed {
-    background: gray;
+.black.pressed {
+    box-shadow: inset 0px -1px 1px rgba(255,255,255,0.4),
+                0 1px 0px rgba(0,0,0,0.8),
+                0 2px 2px rgba(0,0,0,0.4),
+                0 -1px 0px #000;
 }
