@@ -57,7 +57,6 @@
         this.osc2DetuneOutput.innerHTML = this.options.osc2Detune;
         this.envAttackOutput.innerHTML = this.options.envAttack;
         this.envReleaseOutput.innerHTML = this.options.envRelease;
-        this.synthId.innerHTML = this.engine.getId();
     };
 
     AudioInterface.prototype.bindEvents = function () {

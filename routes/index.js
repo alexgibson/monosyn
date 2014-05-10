@@ -1,5 +1,7 @@
 'use strict';
 
+var utils = require('../lib/utils');
+
 exports.index = function(req, res) {
     var ua = req.header('user-agent');
 
@@ -13,7 +15,8 @@ exports.index = function(req, res) {
         });
     } else {
         res.render('synth', {
-            title: 'Monosyn'
+            title: 'Monosyn',
+            id: utils.createId()
         });
     }
 };

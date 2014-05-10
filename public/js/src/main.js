@@ -20,11 +20,12 @@
         });
 
         socket.on('clientSize', function(data) {
-            engine.setRemoteInputSize(data);
+            engine.setOptions(data);
         });
 
         socket.on('connect', function() {
-            socket.emit('room', engine.getId());
+            var id = document.getElementById('synth-id').innerHTML;
+            socket.emit('room', id);
         });
     }
 

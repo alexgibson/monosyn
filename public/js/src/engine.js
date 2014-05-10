@@ -24,9 +24,6 @@
 
         this.initComponents();
         this.routeComponents();
-
-        // create a new synth ID to use for remote connection
-        this.id = this.createId();
     }
 
     /*
@@ -53,20 +50,6 @@
         this.nodes.masterComp.connect(this.nodes.masterGain);
         this.nodes.masterGain.connect(this.ctx.destination);
         this.nodes.osc.start(0);
-    };
-
-    /*
-     * Generates an id for each synth instance to be used for remote communication
-     */
-    AudioEngine.prototype.createId = function () {
-        var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
-        var length = 8;
-        var randomstring = '';
-        for (var i = 0; i < length; i++) {
-            var rnum = Math.floor(Math.random() * chars.length);
-            randomstring += chars.substring(rnum, rnum+1);
-        }
-        return randomstring;
     };
 
     /*
@@ -153,10 +136,11 @@
     };
 
     /*
-     * Updates remote control input width and height values
+     * Generic method for setting options that aren't directly
+     * tied to a sound preset, such as remote client size.
      * @param options (object)
      */
-    AudioEngine.prototype.setRemoteInputSize = function (options) {
+    AudioEngine.prototype.setOptions = function (options) {
         if (typeof options === 'object') {
             for (var i in options) {
                 if (options.hasOwnProperty(i)) {
@@ -200,13 +184,6 @@
      */
     AudioEngine.prototype.getSource = function () {
         return this.nodes.osc;
-    };
-
-    /*
-     * Returns the synth engine ID used for remote connection
-     */
-    AudioEngine.prototype.getId = function () {
-        return this.id;
     };
 
     window.AudioEngine = AudioEngine;
