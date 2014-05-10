@@ -10,17 +10,11 @@ Monosyn is built using [Web Audio API](http://www.w3.org/TR/webaudio/), [Node.js
 TODO
 ----
 
-* Add Decay and Sustain settings to envelope
-* Add LFO modulator?
 * Add Querty Keyboard support
-* Custom waveshaper?
-* Convolution reverb?
-* Delay unit?
 * Synth needs a decent UI!
 * Remote filter control also needs a UI
 * Ability to load/save presets as JSON.
 * Support mobile device orientation change
-* Installation and setup instructions
 
 Future
 ------
