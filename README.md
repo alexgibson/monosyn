@@ -24,13 +24,15 @@ Future
 Installation
 ------------
 
+Install dependencies:
+
 `npm install`
 
 Build the distribution:
 
 `grunt build`
 
-Then run the server:
+Run the server:
 
 `node app`
 
