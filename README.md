@@ -35,4 +35,4 @@ For development, you can just run `grunt` to start the server and watch for chan
 Browser support
 ---------------
 
-Monosyn uses un-prefixed [Web Audio API](http://www.w3.org/TR/webaudio/) syntax, so currently works best in Firefox. The mobile controller should work on any device that supports [touch events](http://www.w3.org/TR/touch-events/).
+Monosyn uses un-prefixed [Web Audio API](http://www.w3.org/TR/webaudio/) syntax, so currently works best in either Firefox or Chrome Canary. The remote modulation controller should work on any mobile device that supports [touch events](http://www.w3.org/TR/touch-events/).
