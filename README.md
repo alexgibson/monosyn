@@ -26,11 +26,18 @@ Installation
 
 `npm install`
 
-Then run the server
+Build the distribution:
+
+`grunt build`
+
+Then run the server:
 
 `node app`
 
-For development, you can just run `grunt` to start the server and watch for changes.
+Local development
+-----------------
+
+For development purposes, you can just run `grunt` to start the server and watch for changes.
 
 Browser support
 ---------------
