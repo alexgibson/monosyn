@@ -9,7 +9,7 @@ exports.index = function(req, res) {
     res.header("Pragma", "no-cache");
     res.header("Expires", 0);
 
-    if(/mobi|tablet/i.test(ua)) {
+    if (utils.isRemote(ua)) {
         res.render('remote', {
             title: 'Monosyn'
         });

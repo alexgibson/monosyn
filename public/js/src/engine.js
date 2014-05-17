@@ -75,7 +75,7 @@
     AudioEngine.prototype.noteEnd = function () {
         var now = this.ctx.currentTime;
         this.nodes.oscGain.gain.cancelScheduledValues(now);
-        this.nodes.oscGain.gain.setValueAtTime(1, now);
+        this.nodes.oscGain.gain.setValueAtTime(this.nodes.oscGain.gain.value, now);
         this.nodes.oscGain.gain.linearRampToValueAtTime(0, now + this.options.release);
     };
 

@@ -6,6 +6,7 @@ var path = require('path');
 var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
+var utils = require('./lib/utils');
 
 // The `consolidate` adapter module
 var cons = require('consolidate');
@@ -32,12 +33,14 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 
 io.sockets.on('connection', function (socket) {
-    socket.on('room', function(room) {
-        if(socket.room) {
-            socket.leave(socket.room);
+    socket.on('room', function(id) {
+        if (utils.isValidId(id)) {
+            if(socket.room) {
+                socket.leave(socket.room);
+            }
+            socket.room = id;
+            socket.join(id);
         }
-        socket.room = room;
-        socket.join(room);
     });
     socket.on('remoteClientSize', function (msg, room) {
         socket.broadcast.to(msg.room).emit('clientSize', msg);
