@@ -2,7 +2,7 @@
     'use strict';
 
     function init () {
-        var socket = io.connect(window.location.protocol + window.location.hostname);
+        var socket = io();
         var filterPad = document.getElementById('filter');
         var roomId = prompt('Enter synth ID to connect touch control');
 
@@ -52,6 +52,10 @@
         socket.on('connect', function() {
             socket.emit('room', roomId);
             clientSize();
+
+            socket.on('disconnect', function () {
+                //console.log('disconnected');
+            });
         });
 
     }
