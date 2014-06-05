@@ -26,6 +26,14 @@
         }
     };
 
+    DualOscillator.prototype.setOsc1Wave = function (wave) {
+        this.osc1.type = wave;
+    };
+
+    DualOscillator.prototype.setOsc2Wave = function (wave) {
+        this.osc2.type = wave;
+    };
+
     DualOscillator.prototype.setOscDetune = function (options) {
         if (options.osc1) {
             this.osc1.detune.value = options.osc1;
@@ -33,6 +41,14 @@
         if (options.osc2) {
             this.osc2.detune.value = options.osc2;
         }
+    };
+
+    DualOscillator.prototype.setOsc1Detune = function (cents) {
+        this.osc1.detune.value = cents;
+    };
+
+    DualOscillator.prototype.setOsc2Detune = function (cents) {
+        this.osc2.detune.value = cents;
     };
 
     DualOscillator.prototype.start = function (time) {

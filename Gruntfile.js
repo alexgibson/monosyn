@@ -9,10 +9,23 @@ module.exports = function(grunt) {
       },
       basic_and_extras: {
         files: {
-          'public/js/dist/synth.min.js': ['public/js/src/interface.js', 'public/js/src/oscillator.js', 'public/js/src/engine.js', 'public/js/src/main.js'],
+          'public/js/dist/synth.min.js': ['public/js/src/react.js', 'public/js/src/oscillator.js', 'public/js/src/engine.js', 'public/js/src/data.js', 'public/js/tmp/main.js'],
           'public/js/dist/remote.min.js': ['public/js/src/remote.js']
         },
       },
+    },
+    react: {
+      dynamic_mappings: {
+        files: [
+          {
+            expand: true,
+            cwd: 'public/js/src/',
+            src: ['*.jsx'],
+            dest: 'public/js/tmp/',
+            ext: '.js'
+          }
+        ]
+      }
     },
     nodemon: {
       dev: {
@@ -24,8 +37,8 @@ module.exports = function(grunt) {
     },
     watch: {
       scripts: {
-        files: ['public/js/src/*.js'],
-        tasks: ['concat']
+        files: ['public/js/src/*.jsx'],
+        tasks: ['react', 'concat']
       },
     },
     concurrent: {
@@ -42,9 +55,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-nodemon');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-concurrent');
+  grunt.loadNpmTasks('grunt-react');
 
   // Default task(s).
-  grunt.registerTask('build', ['concat']);
+  grunt.registerTask('build', ['react', 'concat']);
   grunt.registerTask('default', ['concurrent']);
 
 };
