@@ -7,21 +7,27 @@ body {
 
 #synth {
     position: relative;
-    width: 864px;
+    width: 840px;
     margin: 20px auto;
     background: #fff;
     border: 1px solid black;
 }
 
 h1 {
+    font-size: 32px;
     margin: 20px 0 0 20px;
+    text-transform: uppercase;
+}
+
+h2 {
+    font-size: 18px;
+    text-transform: uppercase;
 }
 
 .synth-id-label {
     position: absolute;
     top: 20px;
-    right: 20px;
-    font-weight: bold;
+    right: 30px;
 }
 
 input[type="range"] {
@@ -46,10 +52,33 @@ input[type="range"] {
     clear: left;
 }
 
+#status {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    text-transform: capitalize;
+}
+
+#indicator {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-left: 5px;
+}
+
+#indicator.disconnected {
+    background: red;
+}
+
+#indicator.connected {
+    background: green;
+}
+
 .white {
     position: relative;
     float: left;
-    width: 16px;
+    width: 28px;
     height: 100px;
     line-height: 100px;
     text-align: center;
@@ -63,15 +92,27 @@ input[type="range"] {
 .black {
     position: relative;
     float: left;
-    width: 16px;
+    width: 0;
     height: 100px;
     line-height: 100px;
     text-align: center;
     font-size: 13px;
-    border: 1px solid black;
+    border: none;
     background: #000;
     overflow: visible;
     cursor: pointer;
+}
+
+.black:after {
+    position: absolute;
+    top: 0;
+    left: -12px;
+    right: 12px;
+    content: '';
+    width: 24px;
+    height: 65px;
+    background: black;
+    z-index: 10;
 }
 
 .black.pressed {

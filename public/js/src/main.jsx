@@ -37,7 +37,7 @@
                 var waves = this.props.waves;
                 return (
                     <section className="component">
-                        <h2>Oscillator</h2>
+                        <h2>Osc</h2>
                         <select autoComplete="off"
                             defaultValue={this.props.data.wave}
                             id={this.props.data.ref}
@@ -121,7 +121,7 @@
             render: function () {
                 return (
                     <section className="component">
-                        <h2>Envelope</h2>
+                        <h2>Env</h2>
                         <p>
                             <label htmlFor="env-attack">Attack</label>
                             <output htmlFor="env-attack">
@@ -172,7 +172,15 @@
             }
         });
 
-        var ModulationController = React.createClass({
+        var remoteStatus = React.createClass({
+            render: function () {
+                return (
+                    <div id="status">Remote {this.props.status} <span id="indicator" className={this.props.status}></span></div>
+                );
+            }
+        });
+
+        var Monosyn = React.createClass({
             getInitialState: function () {
                 return {
                     osc1Detune: this.props.data.osc1.initialDetune,
@@ -181,6 +189,7 @@
                     q: this.props.data.filter.initialQ,
                     attack: this.props.data.envelope.initialAttack,
                     release: this.props.data.envelope.initialRelease,
+                    status: 'disconnected'
                 };
             },
             componentWillMount: function () {
@@ -188,6 +197,12 @@
 
                 this.playing = false;
                 this.octaveShift = 0;
+
+                socket.on('remoteConnected', function (data) {
+                    self.setState({
+                        status: 'connected'
+                    });
+                });
 
                 socket.on('filterStart', function (data) {
                     engine.getFilterValuesFromTouch(data.x, data.y);
@@ -337,6 +352,8 @@
                             release={this.state.release}
                             onEnvAttackChange={this.handleEnvAttackChange}
                             onEnvReleaseChange={this.handleEnvReleaseChange} />
+                        <remoteStatus
+                            status={this.state.status} />
                         <Keyboard
                             keys={this.props.data.keys}
                             onMouseDown={this.handleMouseDown}
@@ -348,7 +365,7 @@
         });
 
         React.renderComponent(
-          <ModulationController data={data} />,
+          <Monosyn data={data} />,
           document.getElementById('monosyn')
         );
     }

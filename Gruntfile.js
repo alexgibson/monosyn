@@ -37,7 +37,7 @@ module.exports = function(grunt) {
     },
     watch: {
       scripts: {
-        files: ['public/js/src/*.jsx'],
+        files: ['public/js/src/*.jsx', 'public/js/src/*.js'],
         tasks: ['react', 'concat']
       },
     },
@@ -57,8 +57,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-concurrent');
   grunt.loadNpmTasks('grunt-react');
 
-  // Default task(s).
+  // Build source files
   grunt.registerTask('build', ['react', 'concat']);
-  grunt.registerTask('default', ['concurrent']);
+
+  // Build source files, start server and watch for changes
+  grunt.registerTask('default', ['react', 'concat', 'concurrent']);
 
 };
