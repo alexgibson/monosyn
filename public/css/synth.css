@@ -75,32 +75,25 @@ input[type="range"] {
     background: green;
 }
 
-.white {
+.key {
     position: relative;
     float: left;
-    width: 28px;
     height: 100px;
     line-height: 100px;
-    text-align: center;
-    font-size: 13px;
-    border: 1px solid black;
-    background: #fff;
+    font-size: 0;
     overflow: visible;
     cursor: pointer;
 }
 
+.white {
+    width: 28px;
+    border: 1px solid black;
+    background: #fff;
+}
+
 .black {
-    position: relative;
-    float: left;
     width: 0;
-    height: 100px;
-    line-height: 100px;
-    text-align: center;
-    font-size: 13px;
-    border: none;
     background: #000;
-    overflow: visible;
-    cursor: pointer;
 }
 
 .black:after {

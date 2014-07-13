@@ -58,7 +58,7 @@ var data = {
         'maxDetune': 50,
         'setWave': null,
         'setDetune': null,
-        'ref': 'osc-1',
+        'ref': 'osc1',
         'detuneId': 'osc-1-detune'
     },
     'osc2': {
@@ -68,7 +68,7 @@ var data = {
         'maxDetune': 50,
         'setWave': null,
         'setDetune': null,
-        'ref': 'osc-2',
+        'ref': 'osc2',
         'detuneId': 'osc-2-detune'
     },
     'filter': {

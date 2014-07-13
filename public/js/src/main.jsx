@@ -158,21 +158,25 @@
         var Keyboard = React.createClass({
             render: function () {
                 var keyboard = this.props.keys;
+                var props = this.props;
                 return (
-                    <ul id="keyboard"
-                        onMouseDown={this.props.onMouseDown}
-                        onMouseMove={this.props.onMouseMove}
-                        onMouseUp={this.props.onMouseUp}
-                        onMouseLeave={this.props.onMouseUp}>
+                    <ol id="keyboard" onMouseLeave={this.props.onMouseUp}>
                         {keyboard.map(function (k) {
-                            return <li key={k.note} className={k.cls} data-id={k.note}></li>;
+                            var classString = 'key ' + k.cls;
+                            return  <li key={k.note}
+                                        className={classString}
+                                        onMouseDown={props.onMouseDown}
+                                        onMouseMove={props.onMouseMove}
+                                        onMouseUp={props.onMouseUp}>
+                                        {k.note}
+                                    </li>;
                         })}
-                    </ul>
+                    </ol>
                 );
             }
         });
 
-        var remoteStatus = React.createClass({
+        var statusIndicator = React.createClass({
             render: function () {
                 return (
                     <div id="status">Remote {this.props.status} <span id="indicator" className={this.props.status}></span></div>
@@ -195,7 +199,8 @@
             componentWillMount: function () {
                 var self = this;
 
-                this.playing = false;
+                this.mouseDown = false;
+                this.keyDown = false;
                 this.octaveShift = 0;
 
                 socket.on('remoteConnected', function (data) {
@@ -220,8 +225,8 @@
                     });
                 });
 
-                document.addEventListener('keydown', this.handleKeyDown, false);
-                document.addEventListener('keyup', this.handleKeyUp, false);
+                document.addEventListener('keydown', this.handleKeyDown, true);
+                document.addEventListener('keyup', this.handleKeyUp, true);
             },
             handleOsc1WaveChange: function (e) {
                 osc.setOsc1Wave(e.target.value);
@@ -272,20 +277,18 @@
             },
             handleMouseDown: function (e) {
                 e.preventDefault();
-                var key = document.elementFromPoint(e.clientX, e.clientY);
-                var freq = engine.getFreqFromNote(key.getAttribute('data-id'));
+                var freq = engine.getFreqFromNote(e.target.textContent);
 
                 osc.setFreq(freq);
                 engine.noteStart();
-                this.playing = true;
+                this.mouseDown = true;
                 this.currentNote = freq;
             },
             handleMouseMove: function (e) {
                 e.preventDefault();
-                var key = document.elementFromPoint(e.clientX, e.clientY);
-                var freq = engine.getFreqFromNote(key.getAttribute('data-id'));
+                var freq = engine.getFreqFromNote(e.target.textContent);
 
-                if (this.playing && this.currentNote !== freq) {
+                if (this.mouseDown && this.currentNote !== freq) {
                     osc.setFreq(freq);
                     engine.noteMove(1);
                     this.currentNote = freq;
@@ -293,34 +296,37 @@
             },
             handleMouseUp: function (e) {
                 e.preventDefault();
-                if (this.playing) {
+                if (this.mouseDown) {
                     engine.noteEnd();
-                    this.playing = false;
+                    this.mouseDown = false;
                 }
             },
             handleKeyDown: function (e) {
                 var note = data.chars[e.key] + (this.octaveShift * 12);
                 var freq;
-                if (note) {
+                if (note && !this.keyDown) {
                     e.preventDefault();
                     freq = engine.getFreqFromNote(note);
-                    if (!this.playing) {
-                        osc.setFreq(freq);
-                        engine.noteStart();
-                        this.playing = true;
-                        this.currentNote = freq;
-                    } else if (this.currentNote !== freq) {
-                        osc.setFreq(freq);
-                        engine.noteMove(1);
-                        this.currentNote = freq;
+                    osc.setFreq(freq);
+                    engine.noteStart();
+                    this.keyDown = true;
+                    this.currentNote = freq;
+                } else {
+                    switch (e.key) {
+                    case 'Right':
+                        this.octaveShift += 1;
+                        break;
+                    case 'Left':
+                        this.octaveShift -= 1;
+                        break;
                     }
                 }
             },
             handleKeyUp: function (e) {
-                if (this.playing) {
+                if (this.keyDown) {
                     e.preventDefault();
                     engine.noteEnd();
-                    this.playing = false;
+                    this.keyDown = false;
                 }
             },
             render: function() {
@@ -352,7 +358,7 @@
                             release={this.state.release}
                             onEnvAttackChange={this.handleEnvAttackChange}
                             onEnvReleaseChange={this.handleEnvReleaseChange} />
-                        <remoteStatus
+                        <statusIndicator
                             status={this.state.status} />
                         <Keyboard
                             keys={this.props.data.keys}
