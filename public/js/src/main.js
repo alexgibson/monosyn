@@ -1,4 +1,5 @@
 import React from 'react';
+import io from 'socket.io-client';
 import Oscillator from './components/oscillator';
 import BiquadFilter from './components/biquad-filter';
 import Envelope from './components/envelope';
@@ -8,9 +9,9 @@ import config from './synth/config';
 
 window.addEventListener('DOMContentLoaded', () => {
 
-    let socket = io();
     let engine = new AudioEngine();
     let osc = engine.getSource();
+    let socket = io();
 
     socket.on('connect', () => {
         let id = document.getElementById('synth-id').innerHTML;

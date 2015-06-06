@@ -5,8 +5,6 @@
     <title>{{ title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/css/synth.css">
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/js/dist/synth-bundle.js"></script>
   </head>
   <body>
     <main role="main" id="synth">
@@ -14,5 +12,6 @@
       <p class="synth-id-label">ID: <span id="synth-id">{{ id }}</span></p>
       <div id="monosyn"></div>
     </main>
+    <script src="/js/dist/synth-bundle.js"></script>
   </body>
 </html>

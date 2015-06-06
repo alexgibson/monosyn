@@ -1,8 +1,11 @@
+import io from 'socket.io-client';
+
 window.addEventListener('DOMContentLoaded', () => {
+    'use strict';
 
     let socket = io();
     let filterPad = document.getElementById('filter');
-    let roomId = prompt('Enter synth ID to connect touch control');
+    let roomId = window.prompt('Enter synth ID to connect touch control');
 
     if (!roomId) {
         return;
