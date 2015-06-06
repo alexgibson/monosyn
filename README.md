@@ -1,6 +1,8 @@
 Monosyn
 =======
 
+[![Dependency Status](https://david-dm.org/alexgibson/monosyn.svg)](https://david-dm.org/alexgibson/monosyn) [![devDependency Status](https://david-dm.org/alexgibson/monosyn/dev-status.svg)](https://david-dm.org/alexgibson/monosyn#info=devDependencies)
+
 A Node.js powered Web Audio synthesizer with remote filter modulation controller.
 
 Monosyn is a 49 key, monophonic, subtractive synthesizer for desktop web browsers. It features dual oscillators, biquad filter and envelope controls. Connect your mobile device to act as a real-time filter modulation controller.
