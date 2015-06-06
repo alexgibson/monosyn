@@ -1,4 +1,4 @@
-var data = {
+const MonosynData = {
     'waves': [
         {
             'id': 'sine',
@@ -299,3 +299,5 @@ var data = {
         'm': 27
     }
 };
+
+export default MonosynData;

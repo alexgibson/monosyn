@@ -1,66 +1,64 @@
-(function (window, document) {
-    'use strict';
+class DualOscillator {
 
-    function DualOscillator (ctx) {
+    constructor(ctx) {
         this.osc1 = ctx.createOscillator();
         this.osc2 = ctx.createOscillator();
     }
 
-    DualOscillator.prototype.connect = function (output) {
+    connect(output) {
         this.osc1.connect(output);
         this.osc2.connect(output);
-    };
+    }
 
-    DualOscillator.prototype.setFreq = function (freq) {
-        var f = parseFloat(freq);
+    setFreq(freq) {
+        let f = parseFloat(freq);
         this.osc1.frequency.value = f;
         this.osc2.frequency.value = f;
-    };
+    }
 
-    DualOscillator.prototype.setOscWave = function (options) {
+    setOscWave(options) {
         if (options.wave1) {
             this.osc1.type = options.wave1;
         }
         if (options.wave2) {
             this.osc2.type = options.wave2;
         }
-    };
+    }
 
-    DualOscillator.prototype.setOsc1Wave = function (wave) {
+    setOsc1Wave(wave) {
         this.osc1.type = wave;
-    };
+    }
 
-    DualOscillator.prototype.setOsc2Wave = function (wave) {
+    setOsc2Wave(wave) {
         this.osc2.type = wave;
-    };
+    }
 
-    DualOscillator.prototype.setOscDetune = function (options) {
+    setOscDetune(options) {
         if (options.osc1) {
             this.osc1.detune.value = options.osc1;
         }
         if (options.osc2) {
             this.osc2.detune.value = options.osc2;
         }
-    };
+    }
 
-    DualOscillator.prototype.setOsc1Detune = function (cents) {
+    setOsc1Detune(cents) {
         this.osc1.detune.value = cents;
-    };
+    }
 
-    DualOscillator.prototype.setOsc2Detune = function (cents) {
+    setOsc2Detune(cents) {
         this.osc2.detune.value = cents;
-    };
+    }
 
-    DualOscillator.prototype.start = function (time) {
+    start(time) {
         this.osc1.start(time);
         this.osc2.start(time);
-    };
+    }
 
-    DualOscillator.prototype.stop = function (time) {
+    stop(time) {
         this.osc1.stop(time);
         this.osc2.stop(time);
-    };
+    }
+}
 
-    window.DualOscillator = DualOscillator;
-
-}(window, document));
+export default DualOscillator;
