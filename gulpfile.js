@@ -2,7 +2,6 @@
 
 var gulp = require('gulp');
 var watch = require('gulp-watch');
-var jshint = require('gulp-jshint');
 var browserify = require('browserify');
 var babelify = require('babelify');
 var uglify = require('gulp-uglify');
@@ -59,24 +58,18 @@ gulp.task('js:compile-remote', function() {
         .pipe(gulp.dest('./public/js/dist'));
 });
 
-gulp.task('js:lint', function() {
-    return gulp.src('./src/**/*.js')
-        .pipe(jshint({ esnext: true }))
-        .pipe(jshint.reporter('default'));
-});
-
 gulp.task('clean', function () {
     return  del(['dist/**']);
 });
 
-gulp.task('js:compile', ['clean', 'js:lint'], function() {
+gulp.task('js:compile', ['clean'], function() {
     gulp.start('js:compile-synth');
     gulp.start('js:compile-remote');
 });
 
 gulp.task('default', function () {
     gulp.start('js:compile');
-    watch('./src/**/*.js', function () {
+    watch('./public/js/src/*.js', function () {
         gulp.start('js:compile');
     });
 });

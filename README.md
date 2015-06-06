@@ -3,23 +3,9 @@ Monosyn
 
 A Web Audio synthesiser with a Node.js powered modulation controller.
 
-Monosyn is a 49 key, monophonic, subtractive synthesizer for desktop web browsers. It features dual oscillators, biquad filter and envelope controls. Connect your mobile device to act as a touch-based real time filter modulation control.
+Monosyn is a 49 key, monophonic, subtractive synthesizer for desktop web browsers. It features dual oscillators, biquad filter and envelope controls. Connect your mobile device to act as a real-time filter modulation controller.
 
-Monosyn is built using [Web Audio API](http://www.w3.org/TR/webaudio/), [Node.js](http://nodejs.org), [Socket.io](http://socket.io) and [React.js](http://facebook.github.io/react/)
-
-TODO
-----
-
-* Add Querty Keyboard support
-* Synth needs a decent UI!
-* Remote filter control also needs a UI
-* Ability to load/save presets as JSON.
-* Support mobile device orientation change
-
-Future
-------
-
-* [Web MIDI API](http://www.w3.org/TR/webmidi/) support (Polyfill?)
+Monosyn is built using [Web Audio API](http://www.w3.org/TR/webaudio/), [React.js](http://facebook.github.io/react/), [Babel](https://babeljs.io/), [Node.js](http://nodejs.org) and [Socket.io](http://socket.io).
 
 Installation
 ------------
@@ -30,7 +16,7 @@ Install dependencies:
 
 Build the distribution:
 
-`grunt build`
+`gulp js:compile`
 
 Run the server:
 
@@ -39,7 +25,7 @@ Run the server:
 Local development
 -----------------
 
-For development purposes, you can just run `grunt` to start the server and watch for changes.
+For development purposes, you can just run `gulp` to compile JS and watch for changes.
 
 Browser support
 ---------------
