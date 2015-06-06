@@ -25,7 +25,7 @@ Run the server:
 Local development
 -----------------
 
-For development purposes, you can just run `gulp` to compile JS and watch for changes.
+For development purposes you can just type `gulp` to compile JS, start the server and watch for changes.
 
 Browser support
 ---------------

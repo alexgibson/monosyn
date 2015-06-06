@@ -1,3 +1,4 @@
 # .nodemonignore file
 
 /public/
+gulpfile.js

@@ -10,6 +10,8 @@ var minimist = require('minimist');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var del = require('del');
+var nodemon = require('gulp-nodemon');
+var runSequence = require('run-sequence');
 
 var knownOptions = {
     string: ['env', 'smp'],
@@ -67,9 +69,17 @@ gulp.task('js:compile', ['clean'], function() {
     gulp.start('js:compile-remote');
 });
 
-gulp.task('default', function () {
-    gulp.start('js:compile');
-    watch('./public/js/src/*.js', function () {
+gulp.task('start', function() {
+    nodemon({
+        script: 'app.js',
+        ext: 'js hbs',
+        env: { 'NODE_ENV': 'development' }
+    });
+    watch('./public/js/src/**/*.js', function () {
         gulp.start('js:compile');
     });
+});
+
+gulp.task('default', function () {
+    runSequence('clean', ['js:compile-synth', 'js:compile-remote'], 'start');
 });
