@@ -1,13 +1,12 @@
-import DualOscillator from './oscillator';
+import DualOscillator from './dual-oscillator';
 
 class AudioEngine {
 
     constructor() {
-
         // normalize and create a new AudioContext if supported
-        AudioContext = AudioContext || webkitAudioContext;
+        window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
-        this.ctx = new AudioContext();
+        this.ctx = new window.AudioContext();
         this.nodes = {};
         this.options = {
             osc1Wave: 'sine',

@@ -1,4 +1,4 @@
-const MonosynData = {
+let config = {
     'waves': [
         {
             'id': 'sine',
@@ -300,4 +300,4 @@ const MonosynData = {
     }
 };
 
-export default MonosynData;
+export default config;

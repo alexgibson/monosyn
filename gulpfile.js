@@ -45,14 +45,14 @@ gulp.task('js:compile-remote', function() {
         .transform(babelify.configure({
           sourceMapRelative: options.smp
         }))
-        .require('./public/js/src/remote.js', {
+        .require('./public/js/src/controller/filter-mod.js', {
             entry: true
         })
         .bundle()
         .on('error', function (err) {
             console.log('Error : ' + err.message);
         })
-        .pipe(source('remote-bundle.js'))
+        .pipe(source('controller-bundle.js'))
         .pipe(gulpif(options.env === 'production', buffer()))
         .pipe(gulpif(options.env === 'production', uglify()))
         .pipe(gulp.dest('./public/js/dist'));

@@ -10,7 +10,7 @@ exports.index = function(req, res) {
     res.header("Expires", 0);
 
     if (utils.isRemote(ua)) {
-        res.render('remote', {
+        res.render('controller', {
             title: 'Monosyn'
         });
     } else {
