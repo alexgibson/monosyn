@@ -29,6 +29,12 @@ Local development
 
 For development purposes you can just type `gulp` to compile JS, start the server and watch for changes.
 
+By default Javascript is compiled and minified in production mode. To run un-minified and with source maps enabled, simply run:
+
+```
+gulp --env development --smp /path/to/project/root/
+```
+
 Browser support
 ---------------
 
