@@ -1,7 +1,7 @@
-var React = require('react');
-var DefaultLayout = require('./layouts/default');
+import React from 'react';
+import DefaultLayout from './layouts/default';
 
-var Controller = React.createClass({
+export default React.createClass({
   render: function() {
     'use strict';
     return (
@@ -12,5 +12,3 @@ var Controller = React.createClass({
     );
   }
 });
-
-module.exports = Controller;

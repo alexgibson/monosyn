@@ -1,6 +1,6 @@
-var React = require('react');
+import React from 'react';
 
-var DefaultLayout = React.createClass({
+export default React.createClass({
     render: function() {
         'use strict';
         return (
@@ -16,5 +16,3 @@ var DefaultLayout = React.createClass({
         );
     }
 });
-
-module.exports = DefaultLayout;

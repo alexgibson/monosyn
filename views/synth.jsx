@@ -1,8 +1,8 @@
-var React = require('react');
-var DefaultLayout = require('./layouts/default');
+import React from 'react';
+import DefaultLayout from './layouts/default';
 
-var Synth = React.createClass({
-  render: function() {
+export default React.createClass({
+  render() {
     'use strict';
     return (
         <DefaultLayout title={this.props.title}>
@@ -16,5 +16,3 @@ var Synth = React.createClass({
     );
   }
 });
-
-module.exports = Synth;

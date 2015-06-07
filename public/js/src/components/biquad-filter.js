@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default React.createClass({
-    render: function() {
+    render() {
         'use strict';
         let filters = this.props.filters;
         return (
