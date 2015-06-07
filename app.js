@@ -14,15 +14,11 @@ var bodyParser = require('body-parser');
 var multer = require('multer');
 var utils = require('./lib/utils');
 
-// The `consolidate` adapter module
-var cons = require('consolidate');
-
-app.engine('hbs', cons.handlebars);
-
 // all environments
 app.set('port', process.env.PORT || 8000);
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+app.set('view engine', 'jsx');
+app.engine('jsx', require('express-react-views').createEngine({ beautify: true }));
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(methodOverride());

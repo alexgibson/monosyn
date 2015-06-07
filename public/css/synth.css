@@ -3,12 +3,14 @@ body {
     margin: 0;
     padding: 0;
     background: #000;
+    width: 100%;
+    height: 100%;
 }
 
 #synth {
     position: relative;
     width: 840px;
-    margin: 20px auto;
+    margin: 0 auto;
     background: #fff;
     border: 1px solid black;
 }
@@ -113,4 +115,33 @@ input[type="range"] {
                 0 1px 0px rgba(0,0,0,0.8),
                 0 2px 2px rgba(0,0,0,0.4),
                 0 -1px 0px #000;
+}
+
+#filter {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #000;
+}
+
+#filter:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: '';
+    width: 100%;
+    height: 50%;
+    background: transparent;
+    border-bottom: 1px solid #fff;
+}
+
+#filter:after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: '';
+    width: 50%;
+    height: 100%;
+    background: transparent;
+    border-right: 1px solid #fff;
 }
