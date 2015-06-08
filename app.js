@@ -33,6 +33,7 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
+app.get('/r/', routes.remote);
 
 io.on('connection', function (socket) {
     socket.on('room', function(id) {

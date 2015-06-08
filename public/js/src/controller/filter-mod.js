@@ -5,7 +5,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     let socket = io();
     let filterPad = document.getElementById('filter');
-    let roomId = window.prompt('Enter synth ID to connect touch control');
+    let roomId = window.location.hash.substring(1);
 
     if (!roomId) {
         return;

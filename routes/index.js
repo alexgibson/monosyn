@@ -3,20 +3,14 @@
 var utils = require('../lib/utils');
 
 exports.index = function(req, res) {
-    var ua = req.header('user-agent');
+    res.render('synth', {
+        title: 'Monosyn',
+        id: utils.createId()
+    });
+};
 
-    res.header("Cache-Control", "no-cache, no-store, must-revalidate");
-    res.header("Pragma", "no-cache");
-    res.header("Expires", 0);
-
-    if (utils.isRemote(ua)) {
-        res.render('controller', {
-            title: 'Monosyn'
-        });
-    } else {
-        res.render('synth', {
-            title: 'Monosyn',
-            id: utils.createId()
-        });
-    }
+exports.remote = function(req, res) {
+    res.render('controller', {
+        title: 'Monosyn'
+    });
 };
