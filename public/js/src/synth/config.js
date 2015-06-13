@@ -53,39 +53,32 @@ let config = {
     ],
     'osc1': {
         'wave': 'square',
-        'initialDetune': -6,
+        'detune': -6,
         'minDetune': -50,
         'maxDetune': 50,
-        'setWave': null,
-        'setDetune': null,
         'ref': 'osc1',
         'detuneId': 'osc-1-detune'
     },
     'osc2': {
         'wave': 'sawtooth',
-        'initialDetune': -10,
+        'detune': -10,
         'minDetune': -50,
         'maxDetune': 50,
-        'setWave': null,
-        'setDetune': null,
         'ref': 'osc2',
         'detuneId': 'osc-2-detune'
     },
     'filter': {
         'type': 'lowpass',
-        'setType': null,
-        'setFreq': null,
-        'setQ': null,
         'minFreq': 40,
         'maxFreq': 12000,
-        'initialFreq': 12000,
+        'freq': 12000,
         'minQ': 1,
         'maxQ': 10,
-        'initialQ': 1
+        'q': 1
     },
     'envelope': {
-        'initialAttack': 0.1,
-        'initialRelease': 0.2,
+        'attack': 0.1,
+        'release': 0.2,
         'min': 0,
         'max': 2.0,
         'step': 0.1
