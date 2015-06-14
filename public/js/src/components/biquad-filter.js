@@ -2,7 +2,6 @@ import React from 'react';
 
 export default React.createClass({
     render() {
-        'use strict';
         let filters = this.props.filters;
         return (
             <section className="component">

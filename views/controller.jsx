@@ -3,7 +3,6 @@ import DefaultLayout from './layouts/default';
 
 export default React.createClass({
   render: function() {
-    'use strict';
     return (
         <DefaultLayout title={this.props.title}>
             <div id="filter">Filter mod controller</div>

@@ -45,17 +45,20 @@ io.on('connection', function (socket) {
             socket.join(id);
         }
     });
-    socket.on('remoteClientSize', function (msg) {
-        socket.broadcast.to(msg.room).emit('clientSize', msg);
+    socket.on('resize', function (msg) {
+        socket.broadcast.to(msg.room).emit('remote-resize', msg);
     });
-    socket.on('remoteFilterStart', function (msg) {
-        socket.broadcast.to(msg.room).emit('filterStart', msg);
+    socket.on('touchstart', function (msg) {
+        socket.broadcast.to(msg.room).emit('remote-filter-start', msg);
     });
-    socket.on('remoteFilterMove', function (msg) {
-        socket.broadcast.to(msg.room).emit('filterMove', msg);
+    socket.on('touchmove', function (msg) {
+        socket.broadcast.to(msg.room).emit('remote-filter-move', msg);
     });
-    socket.on('remoteFilterEnd', function (msg) {
-        socket.broadcast.to(msg.room).emit('filterEnd', msg);
+    socket.on('touchend', function (msg) {
+        socket.broadcast.to(msg.room).emit('remote-filter-end', msg);
+    });
+    socket.on('status', function(msg) {
+        socket.broadcast.to(msg.room).emit('remote-status', msg);
     });
     socket.on('disconnect', function (data) {
         //console.log('disconnected');

@@ -2,7 +2,6 @@ import React from 'react';
 
 export default React.createClass({
     render() {
-        'use strict';
         return (
             <section className="component">
                 <h2>Env</h2>

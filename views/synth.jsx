@@ -3,7 +3,6 @@ import DefaultLayout from './layouts/default';
 
 export default React.createClass({
   render() {
-    'use strict';
     return (
         <DefaultLayout title={this.props.title}>
             <main role="main" id="synth">

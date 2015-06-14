@@ -1,7 +1,6 @@
 import io from 'socket.io-client';
 
 window.addEventListener('DOMContentLoaded', () => {
-    'use strict';
 
     let socket = io();
     let filterPad = document.getElementById('filter');
@@ -11,39 +10,39 @@ window.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    filterPad.addEventListener('touchstart', filterStart, false);
-    filterPad.addEventListener('touchmove', filterMove, false);
-    filterPad.addEventListener('touchend', filterEnd, false);
+    filterPad.addEventListener('touchstart', onTouchStart, false);
+    filterPad.addEventListener('touchmove', onTouchMove, false);
+    filterPad.addEventListener('touchend', onTouchEnd, false);
 
-    function filterStart (e) {
+    function onTouchStart(e) {
         e.preventDefault();
-        socket.emit('remoteFilterStart', {
+        socket.emit('touchstart', {
             x: e.touches[0].clientX ,
             y: e.touches[0].clientY,
             room: roomId
         });
     }
 
-    function filterMove (e) {
+    function onTouchMove(e) {
         e.preventDefault();
-        socket.emit('remoteFilterMove', {
+        socket.emit('touchmove', {
             x: e.touches[0].clientX,
             y: e.touches[0].clientY,
             room: roomId
         });
     }
 
-    function filterEnd (e) {
+    function onTouchEnd(e) {
         e.preventDefault();
         if (e.touches.length === 0) {
-            socket.emit('remoteFilterEnd', {
+            socket.emit('touchend', {
                 room: roomId
             });
         }
     }
 
-    function clientSize () {
-        socket.emit('remoteClientSize', {
+    function onResize() {
+        socket.emit('resize', {
             remoteWidth: filterPad.clientWidth,
             remoteHeight: filterPad.clientHeight,
             room: roomId
@@ -52,10 +51,18 @@ window.addEventListener('DOMContentLoaded', () => {
 
     socket.on('connect', () => {
         socket.emit('room', roomId);
-        clientSize();
+        onResize();
+
+        socket.emit('status', {
+            connection: 'connected',
+            room: roomId
+        });
 
         socket.on('disconnect', () => {
-            //console.log('disconnected');
+            socket.emit('status', {
+                connection: 'disconnected',
+                room: roomId
+            });
         });
     });
 });

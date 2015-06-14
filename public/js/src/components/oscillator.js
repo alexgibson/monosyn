@@ -2,7 +2,6 @@ import React from 'react';
 
 export default React.createClass({
     render() {
-        'use strict';
         let waves = this.props.waves;
         return (
             <section className="component">

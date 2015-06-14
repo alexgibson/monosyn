@@ -2,7 +2,6 @@ import React from 'react';
 
 export default React.createClass({
     render() {
-        'use strict';
         let keyboard = this.props.keys;
         let props = this.props;
         return (

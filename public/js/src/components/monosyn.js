@@ -4,6 +4,7 @@ import Oscillator from './oscillator';
 import BiquadFilter from './biquad-filter';
 import Envelope from './envelope';
 import Keyboard from './keyboard';
+import StatusIndicator from './status';
 import AudioEngine from '../synth/engine';
 
 export default React.createClass({
@@ -36,45 +37,21 @@ export default React.createClass({
         let socket = io();
 
         socket.on('connect', () => {
-
             let id = document.getElementById('synth-id').innerHTML;
             socket.emit('room', id);
-
-            socket.on('disconnect', () => {
-                this.setState({
-                    status: 'disconnected'
-                });
-            });
-
-            socket.on('remoteConnected', () => {
-                this.setState({
-                    status: 'connected'
-                });
-            });
-
-            socket.on('clientSize', (data) => {
-                this.engine.setOptions(data);
-            });
-
-            socket.on('filterStart', (data) => {
-                this.engine.getFilterValuesFromTouch(data.x, data.y);
-                this.setState({
-                    freq: this.engine.getFilterFreq(),
-                    q: this.engine.getFilterQuality()
-                });
-            });
-
-            socket.on('filterMove', (data) => {
-                this.engine.getFilterValuesFromTouch(data.x, data.y);
-                this.setState({
-                    freq: this.engine.getFilterFreq(),
-                    q: this.engine.getFilterQuality()
-                });
-            });
+            socket.on('remote-resize', this.setEngineOptions);
+            socket.on('remote-filter-start', this.setFilterState);
+            socket.on('remote-filter-move', this.setFilterState);
+            socket.on('remote-status', this.updateStatusIndicator);
         });
 
         document.addEventListener('keydown', this.handleKeyDown, true);
         document.addEventListener('keyup', this.handleKeyUp, true);
+    },
+    updateStatusIndicator(data) {
+        this.setState({
+            status: data.connection
+        });
     },
     setFilterState(data) {
         this.engine.getFilterValuesFromTouch(data.x, data.y);
@@ -216,7 +193,7 @@ export default React.createClass({
                     release={this.state.release}
                     onEnvAttackChange={this.handleEnvAttackChange}
                     onEnvReleaseChange={this.handleEnvReleaseChange} />
-                <statusIndicator
+                <StatusIndicator
                     status={this.state.status} />
                 <Keyboard
                     keys={this.props.data.keys}
