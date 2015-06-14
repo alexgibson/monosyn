@@ -1,7 +1,7 @@
 Monosyn
 =======
 
-[![Dependency Status](https://david-dm.org/alexgibson/monosyn.svg)](https://david-dm.org/alexgibson/monosyn) [![devDependency Status](https://david-dm.org/alexgibson/monosyn/dev-status.svg)](https://david-dm.org/alexgibson/monosyn#info=devDependencies)
+[![Build Status](https://travis-ci.org/alexgibson/monosyn.svg?branch=master)](https://travis-ci.org/alexgibson/monosyn) [![Dependency Status](https://david-dm.org/alexgibson/monosyn.svg)](https://david-dm.org/alexgibson/monosyn) [![devDependency Status](https://david-dm.org/alexgibson/monosyn/dev-status.svg)](https://david-dm.org/alexgibson/monosyn#info=devDependencies)
 
 A Node.js powered Web Audio synthesizer with remote filter modulation controller.
 
