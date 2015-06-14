@@ -35,6 +35,13 @@ By default Javascript is compiled and minified in production mode. To run un-min
 gulp --env development --smp /path/to/project/root/
 ```
 
+Testing
+-------
+
+Tests are written using [Mocha](http://mochajs.org/) and [Supertest](https://github.com/visionmedia/supertest). To run the tests, simply type:
+
+`npm test`
+
 Browser support
 ---------------
 
