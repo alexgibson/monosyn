@@ -13,6 +13,6 @@ exports.index = function(req, res) {
 
 exports.remote = function(req, res) {
     res.render('controller', {
-        title: 'Monosyn'
+        title: 'Monosyn Filter Mod'
     });
 };

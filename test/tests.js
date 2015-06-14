@@ -6,20 +6,27 @@ var utils = require('../lib/utils');
 /* global describe, it */
 
 describe('/', function() {
-    it('responds with html for /', function(done) {
+    it('responds with synth.jsx for /', function(done) {
         request(app)
             .get('/')
-            .expect('Content-Type', /html/)
-            .expect(200, done);
+            .expect('Content-Type', 'text/html; charset=utf-8')
+            .expect(200)
+            .expect(function(res) {
+                return '<title>Monosyn</title>' in res.body;
+            })
+            .end(done);
     });
 });
 
 describe('/r/', function() {
-    it('responds with html for /r/', function(done) {
+    it('responds with controller.jsx for /r/', function(done) {
         request(app)
             .get('/r/')
-            .expect('Content-Type', /html/)
+            .expect('Content-Type', 'text/html; charset=utf-8')
             .expect(200)
+            .expect(function(res) {
+                return '<title>Monosyn Filter Mod</title>' in res.body;
+            })
             .end(done);
     });
 });
