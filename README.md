@@ -38,7 +38,7 @@ gulp --env development --smp /path/to/project/root/
 Testing
 -------
 
-Tests are written using [Mocha](http://mochajs.org/) and [Supertest](https://github.com/visionmedia/supertest). To run the tests, simply type:
+Tests are written using [Mocha](http://mochajs.org/) and [Supertest](https://github.com/visionmedia/supertest). To run the tests type:
 
 `npm test`
 
