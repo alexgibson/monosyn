@@ -76,7 +76,7 @@ let config = {
         'maxQ': 10,
         'q': 1
     },
-    'envelope': {
+    'env': {
         'attack': 0.1,
         'release': 0.2,
         'min': 0,

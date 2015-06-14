@@ -9,15 +9,23 @@ class AudioEngine {
         this.ctx = new window.AudioContext();
         this.nodes = {};
         this.options = {
-            osc1Wave: 'sine',
-            osc2Wave: 'sine',
-            osc1Detune: 0,
-            osc2Detune: 0,
-            filterType: 'lowpass',
-            filterFreq: 12000,
-            filterQuality: 1,
-            attack: 0,
-            release: 0,
+            osc1: {
+                wave: 'sine',
+                detune: 0
+            },
+            osc2: {
+                wave: 'sine',
+                detune: 0
+            },
+            filter: {
+                type: 'lowpass',
+                freq: 12000,
+                q: 1
+            },
+            env: {
+                attack: 0,
+                release: 0
+            },
             remoteWidth: null,
             remoteHeight: null
 
@@ -60,7 +68,7 @@ class AudioEngine {
         let now = this.ctx.currentTime;
         this.nodes.oscGain.gain.cancelScheduledValues(now);
         this.nodes.oscGain.gain.setValueAtTime(0, now);
-        this.nodes.oscGain.gain.linearRampToValueAtTime(1, now + this.options.attack);
+        this.nodes.oscGain.gain.linearRampToValueAtTime(1, now + this.options.env.attack);
     }
 
     /*
@@ -76,7 +84,7 @@ class AudioEngine {
     noteEnd() {
         let now = this.ctx.currentTime;
         this.nodes.oscGain.gain.cancelScheduledValues(now);
-        this.nodes.oscGain.gain.linearRampToValueAtTime(0, now + this.options.release);
+        this.nodes.oscGain.gain.linearRampToValueAtTime(0, now + this.options.env.release);
     }
 
     /*
@@ -128,11 +136,11 @@ class AudioEngine {
     }
 
     setEnvAttack(time) {
-        this.options.attack = parseFloat(time);
+        this.options.env.attack = parseFloat(time);
     }
 
     setEnvRelease(time) {
-        this.options.release = parseFloat(time);
+        this.options.env.release = parseFloat(time);
     }
 
     /*
@@ -155,28 +163,22 @@ class AudioEngine {
      * @param options (object)
      */
     loadPreset(options) {
-        if (typeof options === 'object') {
-            for (var i in options) {
-                if (options.hasOwnProperty(i)) {
-                    this.options[i] = options[i];
-                }
-            }
+        this.setOptions(options);
 
-            this.nodes.osc.setOscWave({
-                wave1: this.options.osc1Wave,
-                wave2: this.options.osc2Wave
-            });
-            this.nodes.osc.setOscDetune({
-                osc1: this.options.osc1Detune,
-                osc2: this.options.osc2Detune
-            });
+        this.nodes.osc.setOscWave({
+            wave1: this.options.osc1.wave,
+            wave2: this.options.osc2.wave
+        });
+        this.nodes.osc.setOscDetune({
+            osc1: this.options.osc1.detune,
+            osc2: this.options.osc2.detune
+        });
 
-            this.setFilterType(this.options.filterType);
-            this.setFilterFreq(this.options.filterFreq);
-            this.setFilterQuality(this.options.filterQuality);
-            this.setEnvAttack(this.options.envAttack);
-            this.setEnvRelease(this.options.envRelease);
-        }
+        this.setFilterType(this.options.filter.type);
+        this.setFilterFreq(this.options.filter.freq);
+        this.setFilterQuality(this.options.filter.q);
+        this.setEnvAttack(this.options.env.attack);
+        this.setEnvRelease(this.options.env.release);
     }
 
     /*

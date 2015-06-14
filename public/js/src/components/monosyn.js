@@ -13,29 +13,19 @@ export default React.createClass({
             osc1Detune: this.props.data.osc1.detune,
             osc2Detune: this.props.data.osc2.detune,
             freq: this.props.data.filter.freq,
-            q: this.props.data.filter.initialQ,
-            attack: this.props.data.envelope.attack,
-            release: this.props.data.envelope.release,
+            q: this.props.data.filter.q,
+            attack: this.props.data.env.attack,
+            release: this.props.data.env.release,
             status: 'disconnected',
             currentKey: null
         };
     },
     componentWillMount() {
-        this.mouseDown = false;
-        this.keyDown = false;
-        this.octaveShift = 0;
+        let socket = io();
 
         this.engine = new AudioEngine();
         this.osc = this.engine.getSource();
-        this.osc.setOsc1Wave(this.props.data.osc1.wave);
-        this.osc.setOsc2Wave(this.props.data.osc2.wave);
-        this.osc.setOsc1Detune(this.props.data.osc1.detune);
-        this.osc.setOsc2Detune(this.props.data.osc2.detune);
-        this.engine.setFilterQuality(this.props.data.filter.q);
-        this.engine.setFilterType(this.props.data.filter.type);
-        this.engine.setFilterFreq(this.props.data.filter.freq);
-
-        let socket = io();
+        this.engine.loadPreset(this.props.data);
 
         socket.on('connect', () => {
             let id = document.getElementById('synth-id').innerHTML;
@@ -118,7 +108,6 @@ export default React.createClass({
 
         this.osc.setFreq(freq);
         this.engine.noteStart();
-        this.mouseDown = true;
         this.currentFreq = freq;
         this.setState({
             currentKey: key
@@ -129,7 +118,7 @@ export default React.createClass({
         let key = e.target.textContent;
         let freq = this.engine.getFreqFromNote(key);
 
-        if (this.mouseDown && this.currentFreq !== freq) {
+        if (this.currentFreq && this.currentFreq !== freq) {
             this.osc.setFreq(freq);
             this.engine.noteMove(1);
             this.currentFreq = freq;
@@ -140,9 +129,8 @@ export default React.createClass({
     },
     handleMouseUp(e) {
         e.preventDefault();
-        if (this.mouseDown) {
+        if (this.currentFreq) {
             this.engine.noteEnd();
-            this.mouseDown = false;
             this.currentFreq = null;
             this.setState({
                 currentKey: null
@@ -150,13 +138,12 @@ export default React.createClass({
         }
     },
     handleKeyDown(e) {
-        let key = this.props.data.chars[e.key] + (this.octaveShift * 12);
-        if (key && !this.keyDown) {
+        let key = this.props.data.chars[e.key];
+        if (key) {
             e.preventDefault();
             let freq = this.engine.getFreqFromNote(key);
             this.osc.setFreq(freq);
             this.engine.noteStart();
-            this.keyDown = true;
             this.currentFreq = freq;
             this.setState({
                 currentKey: key
@@ -164,10 +151,9 @@ export default React.createClass({
         }
     },
     handleKeyUp(e) {
-        if (this.keyDown) {
+        if (this.currentFreq) {
             e.preventDefault();
             this.engine.noteEnd();
-            this.keyDown = false;
             this.currentFreq = null;
             this.setState({
                 currentKey: null
@@ -198,7 +184,7 @@ export default React.createClass({
                     onFilterFreqChange={this.handleFilterFreqChange}
                     onFilterQualityChange={this.handleFilterQualityChange} />
                 <Envelope
-                    data={this.props.data.envelope}
+                    data={this.props.data.env}
                     attack={this.state.attack}
                     release={this.state.release}
                     onEnvAttackChange={this.handleEnvAttackChange}
