@@ -4,7 +4,8 @@
   "description": "A Web Audio synthesiser with a Node.js powered modulation controller.",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "test": "./node_modules/.bin/mocha"
   },
   "dependencies": {
     "body-parser": "^1.12.4",
@@ -38,7 +39,9 @@
     "gulp-uglify": "^1.2.0",
     "gulp-watch": "^4.2.4",
     "minimist": "^1.1.1",
+    "mocha": "^2.2.5",
     "run-sequence": "^1.1.0",
+    "supertest": "^1.0.1",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   }
