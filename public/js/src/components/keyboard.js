@@ -7,7 +7,8 @@ export default React.createClass({
         return (
             <ol id="keyboard" onMouseLeave={this.props.onMouseUp}>
                 {keyboard.map(function (k) {
-                    let classString = 'key ' + k.cls;
+                    let active = parseInt(props.current, 10) === k.note ? ' pressed' : '';
+                    let classString = 'key ' + k.cls + active;
                     return  <li key={k.note}
                                 className={classString}
                                 onMouseDown={props.onMouseDown}

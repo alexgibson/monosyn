@@ -16,7 +16,8 @@ export default React.createClass({
             q: this.props.data.filter.initialQ,
             attack: this.props.data.envelope.attack,
             release: this.props.data.envelope.release,
-            status: 'disconnected'
+            status: 'disconnected',
+            currentKey: null
         };
     },
     componentWillMount() {
@@ -112,21 +113,29 @@ export default React.createClass({
     },
     handleMouseDown(e) {
         e.preventDefault();
-        let freq = this.engine.getFreqFromNote(e.target.textContent);
+        let key = e.target.textContent;
+        let freq = this.engine.getFreqFromNote(key);
 
         this.osc.setFreq(freq);
         this.engine.noteStart();
         this.mouseDown = true;
-        this.currentNote = freq;
+        this.currentFreq = freq;
+        this.setState({
+            currentKey: key
+        });
     },
     handleMouseMove(e) {
         e.preventDefault();
-        let freq = this.engine.getFreqFromNote(e.target.textContent);
+        let key = e.target.textContent;
+        let freq = this.engine.getFreqFromNote(key);
 
-        if (this.mouseDown && this.currentNote !== freq) {
+        if (this.mouseDown && this.currentFreq !== freq) {
             this.osc.setFreq(freq);
             this.engine.noteMove(1);
-            this.currentNote = freq;
+            this.currentFreq = freq;
+            this.setState({
+                currentKey: key
+            });
         }
     },
     handleMouseUp(e) {
@@ -134,27 +143,24 @@ export default React.createClass({
         if (this.mouseDown) {
             this.engine.noteEnd();
             this.mouseDown = false;
+            this.currentFreq = null;
+            this.setState({
+                currentKey: null
+            });
         }
     },
     handleKeyDown(e) {
-        let note = this.props.data.chars[e.key] + (this.octaveShift * 12);
-        let freq;
-        if (note && !this.keyDown) {
+        let key = this.props.data.chars[e.key] + (this.octaveShift * 12);
+        if (key && !this.keyDown) {
             e.preventDefault();
-            freq = this.engine.getFreqFromNote(note);
+            let freq = this.engine.getFreqFromNote(key);
             this.osc.setFreq(freq);
             this.engine.noteStart();
             this.keyDown = true;
-            this.currentNote = freq;
-        } else {
-            switch (e.key) {
-            case 'Right':
-                this.octaveShift += 1;
-                break;
-            case 'Left':
-                this.octaveShift -= 1;
-                break;
-            }
+            this.currentFreq = freq;
+            this.setState({
+                currentKey: key
+            });
         }
     },
     handleKeyUp(e) {
@@ -162,6 +168,10 @@ export default React.createClass({
             e.preventDefault();
             this.engine.noteEnd();
             this.keyDown = false;
+            this.currentFreq = null;
+            this.setState({
+                currentKey: null
+            });
         }
     },
     render() {
@@ -196,6 +206,7 @@ export default React.createClass({
                 <StatusIndicator
                     status={this.state.status} />
                 <Keyboard
+                    current={this.state.currentKey}
                     keys={this.props.data.keys}
                     onMouseDown={this.handleMouseDown}
                     onMouseMove={this.handleMouseMove}
