@@ -27,14 +27,12 @@ h2 {
     text-transform: uppercase;
 }
 
-.synth-id-label {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-}
-
 input[type="range"] {
     display: block;
+}
+
+footer {
+    padding: 10px;
 }
 
 .component {

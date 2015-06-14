@@ -28,7 +28,7 @@ export default React.createClass({
         this.engine.loadPreset(this.props.data);
 
         socket.on('connect', () => {
-            let id = document.getElementById('synth-id').innerHTML;
+            let id = document.getElementById('synth').dataset.id;
             socket.emit('room', id);
             socket.on('remote-resize', this.setEngineOptions);
             socket.on('remote-filter-start', this.setFilterState);
@@ -163,6 +163,8 @@ export default React.createClass({
     render() {
         return (
             <div>
+                <StatusIndicator
+                    status={this.state.status} />
                 <Oscillator
                     data={this.props.data.osc1}
                     waves={this.props.data.waves}
@@ -189,8 +191,6 @@ export default React.createClass({
                     release={this.state.release}
                     onEnvAttackChange={this.handleEnvAttackChange}
                     onEnvReleaseChange={this.handleEnvReleaseChange} />
-                <StatusIndicator
-                    status={this.state.status} />
                 <Keyboard
                     current={this.state.currentKey}
                     keys={this.props.data.keys}

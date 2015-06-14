@@ -5,11 +5,12 @@ export default React.createClass({
   render() {
     return (
         <DefaultLayout title={this.props.title}>
-            <main role="main" id="synth">
+            <main role="main" id="synth" data-id={this.props.id}>
                 <h1>{this.props.title}</h1>
-                <p className="synth-id-label">ID: <span id="synth-id">{this.props.id}</span></p>
-                <div id="monosyn"></div>
-                <p>Filter mod URL: <a href={'/r/#' + this.props.id} target="_blank">#{this.props.id}</a></p>
+                <section id="monosyn"></section>
+                <footer>
+                    Mobile URL: <a href={this.props.link} target="_blank">{this.props.link}</a>
+                </footer>
             </main>
             <script src="/js/dist/synth-bundle.js"></script>
         </DefaultLayout>
