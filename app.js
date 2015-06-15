@@ -1,24 +1,28 @@
 'use strict';
 
 var express = require('express');
-var routes = require('./routes');
-var path = require('path');
 var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
-var favicon = require('serve-favicon');
+
+var bodyParser = require('body-parser');
+var compression = require('compression');
 var errorHandler = require('errorhandler');
+var favicon = require('serve-favicon');
 var logger = require('morgan');
 var methodOverride = require('method-override');
-var bodyParser = require('body-parser');
 var multer = require('multer');
+var path = require('path');
+var reactViews = require('express-react-views');
+var routes = require('./routes');
 var utils = require('./lib/utils');
 
 // all environments
 app.set('port', process.env.PORT || 8000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jsx');
-app.engine('jsx', require('express-react-views').createEngine({ beautify: true }));
+app.engine('jsx', reactViews.createEngine({ beautify: true }));
+app.use(compression());
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(methodOverride());
