@@ -24,13 +24,14 @@ export default React.createClass({
         let socket = io();
 
         this.engine = new AudioEngine();
-        this.osc = this.engine.getSource();
         this.engine.loadPreset(this.props.data);
+        this.osc = this.engine.getSource();
+        this.filter = this.engine.getFilter();
 
         socket.on('connect', () => {
             let id = document.getElementById('synth').dataset.id;
             socket.emit('room', id);
-            socket.on('remote-resize', this.setEngineOptions);
+            socket.on('remote-resize', this.filter.setRemoteSize);
             socket.on('remote-filter-start', this.setFilterState);
             socket.on('remote-filter-move', this.setFilterState);
             socket.on('remote-status', this.updateStatusIndicator);
@@ -45,14 +46,11 @@ export default React.createClass({
         });
     },
     setFilterState(data) {
-        this.engine.getFilterValuesFromTouch(data.x, data.y);
+        this.filter.setValuesFromTouch(data.x, data.y);
         this.setState({
-            freq: this.engine.getFilterFreq(),
-            q: this.engine.getFilterQuality()
+            freq: this.filter.getFreq(),
+            q: this.filter.getQuality()
         });
-    },
-    setEngineOptions(data) {
-        this.engine.setOptions(data);
     },
     handleOsc1WaveChange(e) {
         this.osc.setOsc1Wave(e.target.value);
@@ -75,19 +73,19 @@ export default React.createClass({
         });
     },
     handleFilterTypeChange(e) {
-        this.engine.setFilterType(e.target.value);
+        this.filter.setType(e.target.value);
     },
     handleFilterFreqChange(e) {
         this.setState({
             freq: e.target.value
         });
-        this.engine.setFilterFreq(e.target.value);
+        this.filter.setFreq(e.target.value);
     },
     handleFilterQualityChange(e) {
         this.setState({
             q: e.target.value
         });
-        this.engine.setFilterQuality(e.target.value);
+        this.filter.setQuality(e.target.value);
     },
     handleEnvAttackChange(e) {
         this.setState({

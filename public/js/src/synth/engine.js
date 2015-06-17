@@ -1,4 +1,5 @@
 import DualOscillator from './dual-oscillator';
+import BiquadFilter from './biquad-filter';
 
 class AudioEngine {
 
@@ -25,10 +26,7 @@ class AudioEngine {
             env: {
                 attack: 0,
                 release: 0
-            },
-            remoteWidth: null,
-            remoteHeight: null
-
+            }
         };
 
         this.initComponents();
@@ -39,10 +37,11 @@ class AudioEngine {
      * Creates audio nodes
      */
     initComponents() {
+        this.filter = new BiquadFilter(this.ctx);
         this.nodes.osc = new DualOscillator(this.ctx);
         this.nodes.oscGain = this.ctx.createGain();
         this.nodes.oscGain.gain.value = 0;
-        this.nodes.filter = this.ctx.createBiquadFilter();
+        this.nodes.filter = this.filter.getNode();
         this.nodes.masterComp = this.ctx.createDynamicsCompressor();
         this.nodes.masterGain = this.ctx.createGain();
         this.nodes.masterGain.gain.value = 0.9;
@@ -88,51 +87,12 @@ class AudioEngine {
     }
 
     /*
-     * Get the filter frequency and q values based on touch coordinates
-     * @param x (number), y (number)
-     */
-    getFilterValuesFromTouch(x, y) {
-        let freq = 12000 - (parseInt(y, 10) * (12000 / this.options.remoteHeight));
-        let q = 10 - (this.options.remoteWidth - parseInt(x, 10)) / this.options.remoteWidth * 10;
-        freq = Math.min(freq, 12000);
-        freq = Math.max(40, freq);
-        q = Math.min(q, 10);
-        q = Math.max(1, q);
-        this.setFilterQuality(Math.round(q));
-        this.setFilterFreq(Math.round(freq));
-    }
-
-    /*
      * Returns the oscillator frequency for a given piano key number
      * @param note (number)
      * @return frequency (number)
      */
     getFreqFromNote(note) {
         return 440 * Math.pow(2, (note - 49) / 12);
-    }
-
-    getFilterType(type) {
-        return this.nodes.filter.type;
-    }
-
-    setFilterType(type) {
-        this.nodes.filter.type = type;
-    }
-
-    setFilterFreq(freq) {
-        this.nodes.filter.frequency.value = freq;
-    }
-
-    getFilterFreq() {
-        return this.nodes.filter.frequency.value;
-    }
-
-    getFilterQuality() {
-        return this.nodes.filter.Q.value;
-    }
-
-    setFilterQuality(q) {
-        this.nodes.filter.Q.value = q;
     }
 
     setEnvAttack(time) {
@@ -174,9 +134,9 @@ class AudioEngine {
             osc2: this.options.osc2.detune
         });
 
-        this.setFilterType(this.options.filter.type);
-        this.setFilterFreq(this.options.filter.freq);
-        this.setFilterQuality(this.options.filter.q);
+        this.filter.setType(this.options.filter.type);
+        this.filter.setFreq(this.options.filter.freq);
+        this.filter.setQuality(this.options.filter.q);
         this.setEnvAttack(this.options.env.attack);
         this.setEnvRelease(this.options.env.release);
     }
@@ -186,6 +146,13 @@ class AudioEngine {
      */
     getSource() {
         return this.nodes.osc;
+    }
+
+    /*
+     * Returns a reference to the filter component
+     */
+    getFilter() {
+        return this.filter;
     }
 }
 
