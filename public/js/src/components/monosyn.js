@@ -105,7 +105,7 @@ export default React.createClass({
     },
     handleMouseDown(e) {
         e.preventDefault();
-        let key = e.target.textContent;
+        let key = e.target.dataset.note;
         let freq = this.engine.getFreqFromNote(key);
 
         this.osc.setFreq(freq);
@@ -117,7 +117,7 @@ export default React.createClass({
     },
     handleMouseMove(e) {
         e.preventDefault();
-        let key = e.target.textContent;
+        let key = e.target.dataset.note;
         let freq = this.engine.getFreqFromNote(key);
 
         if (this.currentFreq && this.currentFreq !== freq) {

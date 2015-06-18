@@ -13,8 +13,8 @@ export default React.createClass({
                                 className={classString}
                                 onMouseDown={props.onMouseDown}
                                 onMouseMove={props.onMouseMove}
-                                onMouseUp={props.onMouseUp}>
-                                {k.note}
+                                onMouseUp={props.onMouseUp}
+                                data-note={k.note}>
                             </li>;
                 })}
             </ol>
