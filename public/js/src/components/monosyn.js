@@ -31,7 +31,7 @@ export default React.createClass({
         socket.on('connect', () => {
             let id = document.getElementById('synth').dataset.id;
             socket.emit('room', id);
-            socket.on('remote-resize', this.filter.setRemoteSize);
+            socket.on('remote-resize', this.filter.setRemoteSize.bind(this.filter));
             socket.on('remote-filter-start', this.setFilterState);
             socket.on('remote-filter-move', this.setFilterState);
             socket.on('remote-status', this.updateStatusIndicator);
@@ -39,6 +39,9 @@ export default React.createClass({
 
         document.addEventListener('keydown', this.handleKeyDown, true);
         document.addEventListener('keyup', this.handleKeyUp, true);
+    },
+    shouldComponentUpdate: function(nextProps, nextState) {
+    	return nextProps !== this.props || nextState !== this.state;
     },
     updateStatusIndicator(data) {
         this.setState({

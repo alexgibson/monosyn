@@ -2,8 +2,10 @@ class BiquadFilter {
 
     constructor(ctx) {
         this.filter = ctx.createBiquadFilter();
-        this.remoteWidth = 0;
-        this.remoteHeight = 0;
+        this.options = {
+            remoteWidth: 0,
+            remoteHeight: 0
+        };
     }
 
     connect(output) {
@@ -15,8 +17,8 @@ class BiquadFilter {
      * @param x (number), y (number)
      */
     setValuesFromTouch(x, y) {
-        let freq = 12000 - (parseInt(y, 10) * (12000 / this.remoteHeight));
-        let q = 10 - (this.remoteWidth - parseInt(x, 10)) / this.remoteWidth * 10;
+        let freq = 12000 - (parseInt(y, 10) * (12000 / this.options.remoteHeight));
+        let q = 10 - (this.options.remoteWidth - parseInt(x, 10)) / this.options.remoteWidth * 10;
         freq = Math.min(freq, 12000);
         freq = Math.max(40, freq);
         q = Math.min(q, 10);
@@ -49,9 +51,9 @@ class BiquadFilter {
         this.filter.Q.value = q;
     }
 
-    setRemoteSize(w, h) {
-        this.remoteWidth = w;
-        this.remoteHeight = h;
+    setRemoteSize(data) {
+        this.options.remoteWidth = data.remoteWidth;
+        this.options.remoteHeight = data.remoteHeight;
     }
 
     getNode() {
