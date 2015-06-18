@@ -21,7 +21,7 @@ var utils = require('./lib/utils');
 app.set('port', process.env.PORT || 8000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jsx');
-app.engine('jsx', reactViews.createEngine({ beautify: true }));
+app.engine('jsx', reactViews.createEngine());
 app.use(compression());
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
