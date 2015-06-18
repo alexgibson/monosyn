@@ -9,6 +9,7 @@ var utils = require('../lib/utils');
 
 describe('/', function() {
     it('responds with synth.jsx for /', function(done) {
+        this.timeout(5000);
         request(app)
             .get('/')
             .expect('Content-Type', 'text/html; charset=utf-8')
