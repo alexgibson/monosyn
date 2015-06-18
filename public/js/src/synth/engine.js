@@ -1,5 +1,6 @@
 import DualOscillator from './dual-oscillator';
 import BiquadFilter from './biquad-filter';
+import Envelope from './envelope';
 
 class AudioEngine {
 
@@ -38,9 +39,9 @@ class AudioEngine {
      */
     initComponents() {
         this.filter = new BiquadFilter(this.ctx);
+        this.env = new Envelope(this.ctx);
         this.nodes.osc = new DualOscillator(this.ctx);
-        this.nodes.oscGain = this.ctx.createGain();
-        this.nodes.oscGain.gain.value = 0;
+        this.nodes.oscGain = this.env.getNode();
         this.nodes.filter = this.filter.getNode();
         this.nodes.masterComp = this.ctx.createDynamicsCompressor();
         this.nodes.masterGain = this.ctx.createGain();
@@ -63,27 +64,22 @@ class AudioEngine {
     /*
      * Set the source frequency and gain value on key down
      */
-    noteStart(vel) {
-        let now = this.ctx.currentTime;
-        this.nodes.oscGain.gain.cancelScheduledValues(now);
-        this.nodes.oscGain.gain.setValueAtTime(0, now);
-        this.nodes.oscGain.gain.linearRampToValueAtTime(1, now + this.options.env.attack);
+    noteStart() {
+        this.env.attack(this.ctx.currentTime);
     }
 
     /*
      * Set the source frequency and gain value on key move
      */
     noteMove(val) {
-        this.nodes.oscGain.gain.value = val;
+        this.env.sustain(val);
     }
 
     /*
      * Mute the source gain value on key up
      */
     noteEnd() {
-        let now = this.ctx.currentTime;
-        this.nodes.oscGain.gain.cancelScheduledValues(now);
-        this.nodes.oscGain.gain.linearRampToValueAtTime(0, now + this.options.env.release);
+        this.env.release(this.ctx.currentTime);
     }
 
     /*
@@ -93,14 +89,6 @@ class AudioEngine {
      */
     getFreqFromNote(note) {
         return 440 * Math.pow(2, (note - 49) / 12);
-    }
-
-    setEnvAttack(time) {
-        this.options.env.attack = parseFloat(time);
-    }
-
-    setEnvRelease(time) {
-        this.options.env.release = parseFloat(time);
     }
 
     /*
@@ -137,8 +125,8 @@ class AudioEngine {
         this.filter.setType(this.options.filter.type);
         this.filter.setFreq(this.options.filter.freq);
         this.filter.setQuality(this.options.filter.q);
-        this.setEnvAttack(this.options.env.attack);
-        this.setEnvRelease(this.options.env.release);
+        this.env.setAttack(this.options.env.attack);
+        this.env.setRelease(this.options.env.release);
     }
 
     /*
@@ -153,6 +141,13 @@ class AudioEngine {
      */
     getFilter() {
         return this.filter;
+    }
+
+    /*
+     * Returns a reference to the envelope component
+     */
+    getEnv() {
+        return this.env;
     }
 }
 

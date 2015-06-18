@@ -27,6 +27,7 @@ export default React.createClass({
         this.engine.loadPreset(this.props.data);
         this.osc = this.engine.getSource();
         this.filter = this.engine.getFilter();
+        this.env = this.engine.getEnv();
 
         socket.on('connect', () => {
             let id = document.getElementById('synth').dataset.id;
@@ -94,13 +95,13 @@ export default React.createClass({
         this.setState({
             attack: e.target.value
         });
-        this.engine.setEnvAttack(e.target.value);
+        this.env.setAttack(e.target.value);
     },
     handleEnvReleaseChange(e) {
         this.setState({
             release: e.target.value
         });
-        this.engine.setEnvRelease(e.target.value);
+        this.env.setRelease(e.target.value);
     },
     handleMouseDown(e) {
         e.preventDefault();
