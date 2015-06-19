@@ -11,18 +11,22 @@ body {
 #synth {
     position: relative;
     width: 840px;
-    margin: 0 auto;
-    background: #fff;
-    border: 1px solid black;
+    margin: 20px auto;
+    padding: 0 10px;
+    background: -webkit-linear-gradient(top, #eee 0%, #ccc 100%);
+    background: linear-gradient(to bottom, #eee 0%, #ccc 100%);
+    border-radius: 6px;
+    overflow: hidden;
 }
 
 h1 {
     font-size: 32px;
-    margin: 20px 0 0 20px;
+    margin: 20px 0 20px;
     text-transform: uppercase;
 }
 
 h2 {
+    margin: 0 0 10px;
     font-size: 18px;
     text-transform: uppercase;
 }
@@ -32,12 +36,28 @@ input[type="range"] {
 }
 
 footer {
-    padding: 10px;
+    padding: 10px 0;
+    font-weight: bold;
+}
+
+a:link,
+a:visited {
+    color: #000;
+    font-weight: normal;
+}
+
+a:hover,
+a:active,
+a:focus {
+    text-decoration: none;
 }
 
 .component {
     float: left;
-    margin: 0 0 20px 20px;
+    margin: 0 20px 20px 0;
+    padding: 10px;
+    border: 1px solid #000;
+    border-radius: 6px;
 }
 
 .component label:after {
@@ -69,11 +89,11 @@ footer {
 }
 
 #indicator.disconnected {
-    background: red;
+    background-color: #f00;
 }
 
 #indicator.connected {
-    background: green;
+    background: #34C334;
 }
 
 .key {
@@ -89,7 +109,11 @@ footer {
 .white {
     width: 28px;
     border: 1px solid black;
-    background: #fff;
+    background: -webkit-linear-gradient(top, #eee 0%, #fff 50%);
+    background: linear-gradient(to bottom, #eee 0%, #fff 50%);
+    box-shadow: -1px 0 0 rgba(255, 255, 255, 0.8) inset,
+                0 0 3px #ccc inset,
+                0 0 1px rgba(0, 0, 0, 0.2);
 }
 
 .black {
@@ -105,13 +129,20 @@ footer {
     content: '';
     width: 24px;
     height: 65px;
-    background: black;
+    background: -webkit-linear-gradient(45deg, #222 0%,#555 100%);
+    background: linear-gradient(45deg, #222 0%,#555 100%);
+    box-shadow: -1px -1px 2px rgba(255, 255, 255, 0.2) inset,
+                0 -3px 1px 2px rgba(0, 0, 0, 0.6) inset,
+                0 1px 3px rgba(0, 0, 0, 0.5);
     z-index: 10;
 }
 
-.key.white.pressed,
+.key.white.pressed {
+    background: #eee;
+}
+
 .key.black.pressed:after {
-    background: red;
+    background: #333;
 }
 
 #filter {

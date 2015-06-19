@@ -9,8 +9,8 @@ export default React.createClass({
                 <select ref="filter"
                     defaultValue={this.props.data.type}
                     onChange={this.props.onFilterTypeChange}>
-                    {filters.map(function (filter) {
-                        return <option key={filter.id} value={filter.id}>{filter.text}</option>;
+                    {filters.map(function (id) {
+                        return <option key={id} value={id}>{id}</option>;
                     })}
                 </select>
                 <p>

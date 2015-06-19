@@ -1,55 +1,19 @@
-let config = {
+const config = {
     'waves': [
-        {
-            'id': 'sine',
-            'text': 'Sine'
-        },
-        {
-            'id': 'square',
-            'text': 'Square'
-        },
-        {
-            'id': 'sawtooth',
-            'text': 'Sawtooth'
-        },
-        {
-            'id': 'triangle',
-            'text': 'Triangle'
-        }
+        'sine',
+        'square',
+        'sawtooth',
+        'triangle'
     ],
     'filters': [
-        {
-            'id': 'lowpass',
-            'text': 'Lowpass'
-        },
-        {
-            'id': 'highpass',
-            'text': 'Highpass'
-        },
-        {
-            'id': 'bandpass',
-            'text': 'Bandpass'
-        },
-        {
-            'id': 'lowshelf',
-            'text': 'Lowshelf'
-        },
-        {
-            'id': 'highshelf',
-            'text': 'Highshelf'
-        },
-        {
-            'id': 'peaking',
-            'text': 'Peaking'
-        },
-        {
-            'id': 'notch',
-            'text': 'Notch'
-        },
-        {
-            'id': 'allpass',
-            'text': 'Allpass'
-        },
+        'lowpass',
+        'highpass',
+        'bandpass',
+        'lowshelf',
+        'highshelf',
+        'peaking',
+        'notch',
+        'allpass'
     ],
     'osc1': {
         'wave': 'square',

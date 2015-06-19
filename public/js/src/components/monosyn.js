@@ -21,13 +21,14 @@ export default React.createClass({
         };
     },
     componentWillMount() {
-        let socket = io();
-
         this.engine = new AudioEngine();
         this.engine.loadPreset(this.props.data);
         this.osc = this.engine.getSource();
         this.filter = this.engine.getFilter();
         this.env = this.engine.getEnv();
+    },
+    componentDidMount() {
+        let socket = io();
 
         socket.on('connect', () => {
             let id = document.getElementById('synth').dataset.id;

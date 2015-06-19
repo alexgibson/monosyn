@@ -11,8 +11,8 @@ export default React.createClass({
                     id={this.props.data.ref}
                     ref={this.props.data.ref}
                     onChange={this.props.onWaveChange}>
-                    {waves.map(function (wave) {
-                        return <option key={wave.id} value={wave.id}>{wave.text}</option>;
+                    {waves.map(function (id) {
+                        return <option key={id} value={id}>{id}</option>;
                     })}
                 </select>
                 <p>
