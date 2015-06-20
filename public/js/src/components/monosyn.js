@@ -1,4 +1,5 @@
 import React from 'react';
+import { PureRenderMixin } from 'react/addons';
 import io from 'socket.io-client';
 import Oscillator from './oscillator';
 import BiquadFilter from './biquad-filter';
@@ -8,6 +9,7 @@ import StatusIndicator from './status';
 import AudioEngine from '../synth/engine';
 
 export default React.createClass({
+    mixins: [PureRenderMixin],
     getInitialState() {
         return {
             osc1Detune: this.props.data.osc1.detune,
@@ -41,9 +43,6 @@ export default React.createClass({
 
         document.addEventListener('keydown', this.handleKeyDown, true);
         document.addEventListener('keyup', this.handleKeyUp, true);
-    },
-    shouldComponentUpdate: function(nextProps, nextState) {
-    	return nextProps !== this.props || nextState !== this.state;
     },
     updateStatusIndicator(data) {
         this.setState({
