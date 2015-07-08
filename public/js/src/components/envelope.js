@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default React.createClass({
-    render() {
+    render: function() {
         return (
             <section className="component">
                 <h2>Env</h2>

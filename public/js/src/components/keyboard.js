@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default React.createClass({
-    render() {
+    render: function() {
         let keyboard = this.props.keys;
         let props = this.props;
         return (

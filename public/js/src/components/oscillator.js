@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default React.createClass({
-    render() {
+    render: function() {
         let waves = this.props.waves;
         return (
             <section className="component">

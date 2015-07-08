@@ -10,7 +10,7 @@ import AudioEngine from '../synth/engine';
 
 export default React.createClass({
     mixins: [PureRenderMixin],
-    getInitialState() {
+    getInitialState: function() {
         return {
             osc1Detune: this.props.data.osc1.detune,
             osc2Detune: this.props.data.osc2.detune,
@@ -22,14 +22,14 @@ export default React.createClass({
             currentKey: null
         };
     },
-    componentWillMount() {
+    componentWillMount: function() {
         this.engine = new AudioEngine();
         this.engine.loadPreset(this.props.data);
         this.osc = this.engine.getSource();
         this.filter = this.engine.getFilter();
         this.env = this.engine.getEnv();
     },
-    componentDidMount() {
+    componentDidMount: function() {
         let socket = io();
 
         socket.on('connect', () => {
@@ -44,66 +44,66 @@ export default React.createClass({
         document.addEventListener('keydown', this.handleKeyDown, true);
         document.addEventListener('keyup', this.handleKeyUp, true);
     },
-    updateStatusIndicator(data) {
+    updateStatusIndicator: function(data) {
         this.setState({
             status: data.connection
         });
     },
-    setFilterState(data) {
+    setFilterState: function(data) {
         this.filter.setValuesFromTouch(data.x, data.y);
         this.setState({
             freq: this.filter.getFreq(),
             q: this.filter.getQuality()
         });
     },
-    handleOsc1WaveChange(e) {
+    handleOsc1WaveChange: function(e) {
         this.osc.setOsc1Wave(e.target.value);
     },
-    handleOsc2WaveChange(e) {
+    handleOsc2WaveChange: function(e) {
         this.osc.setOsc2Wave(e.target.value);
     },
-    handleOsc1DetuneChange(e) {
+    handleOsc1DetuneChange: function(e) {
         let value = e.target.value;
         this.osc.setOsc1Detune(value);
         this.setState({
             osc1Detune : value
         });
     },
-    handleOsc2DetuneChange(e) {
+    handleOsc2DetuneChange: function(e) {
         let value = e.target.value;
         this.osc.setOsc2Detune(value);
         this.setState({
             osc2Detune : value
         });
     },
-    handleFilterTypeChange(e) {
+    handleFilterTypeChange: function(e) {
         this.filter.setType(e.target.value);
     },
-    handleFilterFreqChange(e) {
+    handleFilterFreqChange: function(e) {
         this.setState({
             freq: e.target.value
         });
         this.filter.setFreq(e.target.value);
     },
-    handleFilterQualityChange(e) {
+    handleFilterQualityChange: function(e) {
         this.setState({
             q: e.target.value
         });
         this.filter.setQuality(e.target.value);
     },
-    handleEnvAttackChange(e) {
+    handleEnvAttackChange: function(e) {
         this.setState({
             attack: e.target.value
         });
         this.env.setAttack(e.target.value);
     },
-    handleEnvReleaseChange(e) {
+    handleEnvReleaseChange: function(e) {
         this.setState({
             release: e.target.value
         });
         this.env.setRelease(e.target.value);
     },
-    handleMouseDown(e) {
+    handleMouseDown: function(e) {
         e.preventDefault();
         let key = e.target.dataset.note;
         let freq = this.engine.getFreqFromNote(key);
@@ -115,7 +115,7 @@ export default React.createClass({
             currentKey: key
         });
     },
-    handleMouseMove(e) {
+    handleMouseMove: function(e) {
         e.preventDefault();
         let key = e.target.dataset.note;
         let freq = this.engine.getFreqFromNote(key);
@@ -129,7 +129,7 @@ export default React.createClass({
             });
         }
     },
-    handleMouseUp(e) {
+    handleMouseUp: function(e) {
         e.preventDefault();
         if (this.currentFreq) {
             this.engine.noteEnd();
@@ -139,7 +139,7 @@ export default React.createClass({
             });
         }
     },
-    handleKeyDown(e) {
+    handleKeyDown: function(e) {
         let key = this.props.data.chars[e.key];
         if (key) {
             e.preventDefault();
@@ -152,7 +152,7 @@ export default React.createClass({
             });
         }
     },
-    handleKeyUp(e) {
+    handleKeyUp: function(e) {
         if (this.currentFreq) {
             e.preventDefault();
             this.engine.noteEnd();
@@ -162,7 +162,7 @@ export default React.createClass({
             });
         }
     },
-    render() {
+    render: function() {
         return (
             <div>
                 <StatusIndicator

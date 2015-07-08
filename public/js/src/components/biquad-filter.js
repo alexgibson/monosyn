@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default React.createClass({
-    render() {
+    render: function() {
         let filters = this.props.filters;
         return (
             <section className="component">

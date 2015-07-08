@@ -2,7 +2,7 @@ import React from 'react';
 import DefaultLayout from './layouts/default';
 
 export default React.createClass({
-    render() {
+    render: function() {
         return (
             <DefaultLayout title={this.props.title}>
                 <main role="main" id="synth" data-id={this.props.id}>
